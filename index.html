@@ -252,147 +252,152 @@
     </div>
 
     <script>
-        // 🔧 СПИСОК ТВОИХ ПРЕДМЕТОВ — цены можно менять!
-        const ITEMS = [
-            { id: 'dust', name: 'Аномальная пыль', price: 500 },
-            { id: 'tool', name: 'Мультитул', price: 3000 },
-            { id: 'yeast', name: 'Дрожжи', price: 800 },
-            { id: 'hoof', name: 'Копыто сильного кабана', price: 1200 },
-            { id: 'bolts', name: 'Набор болтов', price: 700 },
-            { id: 'wormwood', name: 'Янтарная полынь', price: 1500 },
-            { id: 'chertocvet', name: 'Чертоцвет', price: 2000 },
-            { id: 'ammonia', name: 'Аммиак', price: 900 },
-            { id: 'lemon', name: 'Мякоть лимонника', price: 1000 },
-            { id: 'slant', name: 'Мякоть сластены', price: 8000 },
-            { id: 'salt', name: 'Мякоть солевика', price: 500 },
-            { id: 'cube', name: 'Мякоть куборбуза', price: 2500 },
-            { id: 'spices', name: 'Набор специй', price: 1100 },
-            { id: 'plasma', name: 'Аномальная плазма', price: 4000 },
-            { id: 'gnosis', name: 'Гнозис', price: 10000 },
-            { id: 'fish', name: 'Полутухлая рыба', price: 300 },
-            { id: 'millet', name: 'Банка с пшеном', price: 400 },
-            { id: 'solution', name: 'Колба с раствором', price: 1300 },
-            { id: 'acid', name: 'Азотная кислота', price: 1800 },
-            { id: 'meat', name: 'Мясо', price: 250 }
-        ];
+    const ITEMS = [
+        { id: 'dust', name: 'Аномальная пыль', price: 500 },
+        { id: 'tool', name: 'Мультитул', price: 3000 },
+        { id: 'yeast', name: 'Дрожжи', price: 800 },
+        { id: 'hoof', name: 'Копыто сильного кабана', price: 1200 },
+        { id: 'bolts', name: 'Набор болтов', price: 700 },
+        { id: 'wormwood', name: 'Янтарная полынь', price: 1500 },
+        { id: 'chertocvet', name: 'Чертоцвет', price: 2000 },
+        { id: 'ammonia', name: 'Аммиак', price: 900 },
+        { id: 'lemon', name: 'Мякоть лимонника', price: 1000 },
+        { id: 'slant', name: 'Мякоть сластены', price: 8000 },
+        { id: 'salt', name: 'Мякоть солевика', price: 500 },
+        { id: 'cube', name: 'Мякоть куборбуза', price: 2500 },
+        { id: 'spices', name: 'Набор специй', price: 1100 },
+        { id: 'plasma', name: 'Аномальная плазма', price: 4000 },
+        { id: 'gnosis', name: 'Гнозис', price: 10000 },
+        { id: 'fish', name: 'Полутухлая рыба', price: 300 },
+        { id: 'millet', name: 'Банка с пшеном', price: 400 },
+        { id: 'solution', name: 'Колба с раствором', price: 1300 },
+        { id: 'acid', name: 'Азотная кислота', price: 1800 },
+        { id: 'meat', name: 'Мясо', price: 250 }
+    ];
 
-        // Функция преобразования названия в имя файла
-        function nameToFilename(name) {
-            return name
-                .toLowerCase()
-                .replace(/ё/g, 'е')
-                .replace(/[^\w\s-]/g, '') // убираем знаки препинания
-                .replace(/\s+/g, '-')       // пробелы → дефисы
-                + '.png';
-        }
+    function nameToFilename(name) {
+        return name
+            .toLowerCase()
+            .replace(/ё/g, 'е')
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            + '.png';
+    }
 
-        // DOM
-        const selectorList = document.getElementById('selector-list');
-        const container = document.getElementById('items-container');
-        const totalCostElement = document.getElementById('total-cost');
-        const copyBtn = document.getElementById('copy-total');
+    const selectorList = document.getElementById('selector-list');
+    const container = document.getElementById('items-container');
+    const totalCostElement = document.getElementById('total-cost');
+    const copyBtn = document.getElementById('copy-total');
 
-        let activeItems = new Set();
+    let activeItems = new Set();
 
-        // Рендер чекбоксов
-        function renderSelector() {
-            selectorList.innerHTML = '';
-            ITEMS.forEach(item => {
-                const label = document.createElement('label');
-                label.className = 'item-check';
-                label.innerHTML = `
-                    <input type="checkbox" value="${item.id}">
-                    ${item.name}
-                `;
-                const checkbox = label.querySelector('input');
-                checkbox.checked = activeItems.has(item.id);
-                checkbox.addEventListener('change', () => {
-                    if (checkbox.checked) {
-                        activeItems.add(item.id);
-                    } else {
-                        activeItems.delete(item.id);
-                    }
-                    renderActiveItems();
-                });
-                selectorList.appendChild(label);
+    function renderSelector() {
+        selectorList.innerHTML = '';
+        ITEMS.forEach(item => {
+            const label = document.createElement('label');
+            label.className = 'item-check';
+            label.innerHTML = `
+                <input type="checkbox" value="${item.id}">
+                ${item.name}
+            `;
+            const checkbox = label.querySelector('input');
+            checkbox.checked = activeItems.has(item.id);
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    activeItems.add(item.id);
+                } else {
+                    activeItems.delete(item.id);
+                }
+                renderActiveItems();
             });
-        }
+            selectorList.appendChild(label);
+        });
+    }
 
-        // Рендер активных карточек
-        function renderActiveItems() {
-            container.innerHTML = '';
-            ITEMS.forEach(item => {
-                if (!activeItems.has(item.id)) return;
+    function renderActiveItems() {
+        container.innerHTML = '';
+        ITEMS.forEach(item => {
+            if (!activeItems.has(item.id)) return;
 
-                const filename = nameToFilename(item.name);
-                const iconPath = `icons/${filename}`;
+            const filename = nameToFilename(item.name);
+            const iconPath = filename;
 
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.dataset.id = item.id;
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.dataset.id = item.id;
 
-                card.innerHTML = `
-                    <div class="item-header">
-                        <div class="item-icon" style="background-image: url('${iconPath}')"></div>
-                        <div class="item-name">${item.name}</div>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Количество:</label>
-                        <input type="number" class="input-field quantity" min="0" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Цена за штуку:</label>
-                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                    </div>
-                    <div class="result">0</div>
-                    <div class="contacts">Контакты или заметки...</div>
-                `;
+            card.innerHTML = `
+                <div class="item-header">
+                    <div class="item-icon" style="background-image: url('${iconPath}')"></div>
+                    <div class="item-name">${item.name}</div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Количество:</label>
+                    <input type="number" class="input-field quantity" min="0" step="1">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Цена за штуку:</label>
+                    <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                </div>
+                <div class="result">0</div>
+                <div class="contacts">Контакты или заметки...</div>
+            `;
 
-                const qInput = card.querySelector('.quantity');
-                const pInput = card.querySelector('.price');
-                const result = card.querySelector('.result');
+            const qInput = card.querySelector('.quantity');
+            const pInput = card.querySelector('.price');
+            const result = card.querySelector('.result');
 
-                qInput.addEventListener('focus', () => qInput.select());
+            qInput.addEventListener('focus', () => qInput.select());
 
-                const update = () => {
-                    const q = parseInt(qInput.value) || 0;
-                    const p = parseInt(pInput.value) || 0;
-                    result.textContent = (q * p).toLocaleString();
-                    updateTotal();
-                };
+            const update = () => {
+                const q = parseInt(qInput.value) || 0;
+                const p = parseInt(pInput.value) || 0;
+                const subtotal = q * p;
+                // Форматируем с пробелами для удобства чтения (например: "15 600")
+                result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
+                updateTotal();
+            };
 
-                qInput.addEventListener('input', update);
-                pInput.addEventListener('input', update);
+            qInput.addEventListener('input', update);
+            pInput.addEventListener('input', update);
 
-                container.appendChild(card);
-            });
-            updateTotal();
-        }
+            container.appendChild(card);
+        });
+        updateTotal();
+    }
 
-        function updateTotal() {
-            let total = 0;
-            document.querySelectorAll('.result').forEach(el => {
-                const val = parseInt(el.textContent.replace(/,/g, '')) || 0;
-                total += val;
-            });
-            totalCostElement.textContent = total.toLocaleString();
-        }
-
-        copyBtn.addEventListener('click', async () => {
-            const text = totalCostElement.textContent.replace(/,/g, '');
-            try {
-                await navigator.clipboard.writeText(text);
-                const original = copyBtn.innerHTML;
-                copyBtn.innerHTML = '✓';
-                setTimeout(() => copyBtn.innerHTML = original, 1000);
-            } catch (e) {
-                alert('Не удалось скопировать. Попробуйте вручную.');
-            }
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.result').forEach(el => {
+            // Парсим число из строки (удаляем пробелы)
+            const valStr = el.textContent.replace(/\s/g, ''); // Убираем все пробелы
+            const val = parseInt(valStr) || 0;
+            total += val;
         });
 
-        // Запуск
-        renderSelector();
-        renderActiveItems();
-    </script>
+        // Выводим общую сумму БЕЗ форматирования (просто число)
+        totalCostElement.textContent = total;
+
+        // Дополнительно — можно добавить форматирование для красоты, но не для расчёта
+        // totalCostElement.textContent = total.toLocaleString('ru-RU').replace(/ /g, ' ');
+        // Но тогда при копировании будет "18 600", а не 18600 — что может мешать.
+        // Поэтому оставляем просто число.
+    }
+
+    copyBtn.addEventListener('click', async () => {
+        const text = totalCostElement.textContent; // Это уже чистое число, например "18600"
+        try {
+            await navigator.clipboard.writeText(text);
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '✓';
+            setTimeout(() => copyBtn.innerHTML = original, 1000);
+        } catch (e) {
+            alert('Не удалось скопировать. Попробуйте вручную.');
+        }
+    });
+
+    renderSelector();
+    renderActiveItems();
+</script>
 </body>
 </html>
