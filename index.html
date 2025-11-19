@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игровой калькулятор</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --card-bg: #12121a;
+            --border-glow: rgba(255,255,255,0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-yellow: #ffeb3b;
+            --accent-blue: #2196f3;
+            --accent-green: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--accent-yellow), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .selector {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .selector h2 {
+            margin-bottom: 12px;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .items-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .item-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .item-check:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .item-check input {
+            margin: 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .item-icon {
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background-color: #1a1a22;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 9px 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 6px rgba(255,235,59,0.4);
+        }
+
+        .result {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--accent-yellow);
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255,235,59,0.1);
+            border-radius: 6px;
+        }
+
+        .contacts {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .total-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 30px;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .total-label {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+        }
+
+        .total-value-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .total-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-yellow);
+        }
+
+        .copy-btn {
+            background: rgba(33,150,243,0.2);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(33,150,243,0.3);
+            transform: scale(1.1);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Игровой калькулятор</h1>
+    </div>
+
+    <div class="selector">
+        <h2>Выберите предметы для расчёта:</h2>
+        <div class="items-list" id="selector-list"></div>
+    </div>
+
+    <div class="container" id="items-container"></div>
+
+    <div class="total-section">
+        <div class="total-label">Общая стоимость:</div>
+        <div class="total-value-container">
+            <div class="total-value" id="total-cost">0</div>
+            <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
+        </div>
+    </div>
+
+    <script>
+        // 🔧 СПИСОК ТВОИХ ПРЕДМЕТОВ — цены можно менять!
+        const ITEMS = [
+            { id: 'dust', name: 'Аномальная пыль', price: 500 },
+            { id: 'tool', name: 'Мультитул', price: 3000 },
+            { id: 'yeast', name: 'Дрожжи', price: 800 },
+            { id: 'hoof', name: 'Копыто сильного кабана', price: 1200 },
+            { id: 'bolts', name: 'Набор болтов', price: 700 },
+            { id: 'wormwood', name: 'Янтарная полынь', price: 1500 },
+            { id: 'chertocvet', name: 'Чертоцвет', price: 2000 },
+            { id: 'ammonia', name: 'Аммиак', price: 900 },
+            { id: 'lemon', name: 'Мякоть лимонника', price: 1000 },
+            { id: 'slant', name: 'Мякоть сластены', price: 8000 },
+            { id: 'salt', name: 'Мякоть солевика', price: 500 },
+            { id: 'cube', name: 'Мякоть куборбуза', price: 2500 },
+            { id: 'spices', name: 'Набор специй', price: 1100 },
+            { id: 'plasma', name: 'Аномальная плазма', price: 4000 },
+            { id: 'gnosis', name: 'Гнозис', price: 10000 },
+            { id: 'fish', name: 'Полутухлая рыба', price: 300 },
+            { id: 'millet', name: 'Банка с пшеном', price: 400 },
+            { id: 'solution', name: 'Колба с раствором', price: 1300 },
+            { id: 'acid', name: 'Азотная кислота', price: 1800 },
+            { id: 'meat', name: 'Мясо', price: 250 }
+        ];
+
+        // Функция преобразования названия в имя файла
+        function nameToFilename(name) {
+            return name
+                .toLowerCase()
+                .replace(/ё/g, 'е')
+                .replace(/[^\w\s-]/g, '') // убираем знаки препинания
+                .replace(/\s+/g, '-')       // пробелы → дефисы
+                + '.png';
+        }
+
+        // DOM
+        const selectorList = document.getElementById('selector-list');
+        const container = document.getElementById('items-container');
+        const totalCostElement = document.getElementById('total-cost');
+        const copyBtn = document.getElementById('copy-total');
+
+        let activeItems = new Set();
+
+        // Рендер чекбоксов
+        function renderSelector() {
+            selectorList.innerHTML = '';
+            ITEMS.forEach(item => {
+                const label = document.createElement('label');
+                label.className = 'item-check';
+                label.innerHTML = `
+                    <input type="checkbox" value="${item.id}">
+                    ${item.name}
+                `;
+                const checkbox = label.querySelector('input');
+                checkbox.checked = activeItems.has(item.id);
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        activeItems.add(item.id);
+                    } else {
+                        activeItems.delete(item.id);
+                    }
+                    renderActiveItems();
+                });
+                selectorList.appendChild(label);
+            });
+        }
+
+        // Рендер активных карточек
+        function renderActiveItems() {
+            container.innerHTML = '';
+            ITEMS.forEach(item => {
+                if (!activeItems.has(item.id)) return;
+
+                const filename = nameToFilename(item.name);
+                const iconPath = `icons/${filename}`;
+
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.dataset.id = item.id;
+
+                card.innerHTML = `
+                    <div class="item-header">
+                        <div class="item-icon" style="background-image: url('${iconPath}')"></div>
+                        <div class="item-name">${item.name}</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Количество:</label>
+                        <input type="number" class="input-field quantity" min="0" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Цена за штуку:</label>
+                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                    </div>
+                    <div class="result">0</div>
+                    <div class="contacts">Контакты или заметки...</div>
+                `;
+
+                const qInput = card.querySelector('.quantity');
+                const pInput = card.querySelector('.price');
+                const result = card.querySelector('.result');
+
+                qInput.addEventListener('focus', () => qInput.select());
+
+                const update = () => {
+                    const q = parseInt(qInput.value) || 0;
+                    const p = parseInt(pInput.value) || 0;
+                    result.textContent = (q * p).toLocaleString();
+                    updateTotal();
+                };
+
+                qInput.addEventListener('input', update);
+                pInput.addEventListener('input', update);
+
+                container.appendChild(card);
+            });
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('.result').forEach(el => {
+                const val = parseInt(el.textContent.replace(/,/g, '')) || 0;
+                total += val;
+            });
+            totalCostElement.textContent = total.toLocaleString();
+        }
+
+        copyBtn.addEventListener('click', async () => {
+            const text = totalCostElement.textContent.replace(/,/g, '');
+            try {
+                await navigator.clipboard.writeText(text);
+                const original = copyBtn.innerHTML;
+                copyBtn.innerHTML = '✓';
+                setTimeout(() => copyBtn.innerHTML = original, 1000);
+            } catch (e) {
+                alert('Не удалось скопировать. Попробуйте вручную.');
+            }
+        });
+
+        // Запуск
+        renderSelector();
+        renderActiveItems();
+    </script>
+</body>
+</html>
