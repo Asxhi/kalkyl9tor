@@ -252,37 +252,29 @@
     </div>
 
     <script>
+    // 🔧 СПИСОК ПРЕДМЕТОВ — теперь с явным указанием имени файла
     const ITEMS = [
-        { id: 'dust', name: 'Аномальная пыль', price: 500 },
-        { id: 'tool', name: 'Мультитул', price: 3000 },
-        { id: 'yeast', name: 'Дрожжи', price: 800 },
-        { id: 'hoof', name: 'Копыто сильного кабана', price: 1200 },
-        { id: 'bolts', name: 'Набор болтов', price: 700 },
-        { id: 'wormwood', name: 'Янтарная полынь', price: 1500 },
-        { id: 'chertocvet', name: 'Чертоцвет', price: 2000 },
-        { id: 'ammonia', name: 'Аммиак', price: 900 },
-        { id: 'lemon', name: 'Мякоть лимонника', price: 1000 },
-        { id: 'slant', name: 'Мякоть сластены', price: 8000 },
-        { id: 'salt', name: 'Мякоть солевика', price: 500 },
-        { id: 'cube', name: 'Мякоть куборбуза', price: 2500 },
-        { id: 'spices', name: 'Набор специй', price: 1100 },
-        { id: 'plasma', name: 'Аномальная плазма', price: 4000 },
-        { id: 'gnosis', name: 'Гнозис', price: 10000 },
-        { id: 'fish', name: 'Полутухлая рыба', price: 300 },
-        { id: 'millet', name: 'Банка с пшеном', price: 400 },
-        { id: 'solution', name: 'Колба с раствором', price: 1300 },
-        { id: 'acid', name: 'Азотная кислота', price: 1800 },
-        { id: 'meat', name: 'Мясо', price: 250 }
+        { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
+        { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
+        { id: 'yeast', name: 'Дрожжи', price: 800, icon: 'drozhzhi.png' },
+        { id: 'hoof', name: 'Копыто сильного кабана', price: 1200, icon: 'kopyto-kabana.png' },
+        { id: 'bolts', name: 'Набор болтов', price: 700, icon: 'nabor-boltov.png' },
+        { id: 'wormwood', name: 'Янтарная полынь', price: 1500, icon: 'yantarnaya-polyin.png' },
+        { id: 'chertocvet', name: 'Чертоцвет', price: 2000, icon: 'chertotsvet.png' },
+        { id: 'ammonia', name: 'Аммиак', price: 900, icon: 'ammiak.png' },
+        { id: 'lemon', name: 'Мякоть лимонника', price: 1000, icon: 'myakot-limonnika.png' },
+        { id: 'slant', name: 'Мякоть сластены', price: 8000, icon: 'myakot-slasteny.png' },
+        { id: 'salt', name: 'Мякоть солевика', price: 500, icon: 'myakot-solevika.png' },
+        { id: 'cube', name: 'Мякоть куборбуза', price: 2500, icon: 'myakot-kuborbuz.png' },
+        { id: 'spices', name: 'Набор специй', price: 1100, icon: 'nabor-spetsiy.png' },
+        { id: 'plasma', name: 'Аномальная плазма', price: 4000, icon: 'anomalnaya-plazma.png' },
+        { id: 'gnosis', name: 'Гнозис', price: 10000, icon: 'gnosis.png' },
+        { id: 'fish', name: 'Полутухлая рыба', price: 300, icon: 'polutukhlaya-ryba.png' },
+        { id: 'millet', name: 'Банка с пшеном', price: 400, icon: 'banka-s-pshenom.png' },
+        { id: 'solution', name: 'Колба с раствором', price: 1300, icon: 'kolba-s-rastvorom.png' },
+        { id: 'acid', name: 'Азотная кислота', price: 1800, icon: 'azotnaya-kislota.png' },
+        { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
     ];
-
-    function nameToFilename(name) {
-        return name
-            .toLowerCase()
-            .replace(/ё/g, 'е')
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            + '.png';
-    }
 
     const selectorList = document.getElementById('selector-list');
     const container = document.getElementById('items-container');
@@ -319,16 +311,13 @@
         ITEMS.forEach(item => {
             if (!activeItems.has(item.id)) return;
 
-            const filename = nameToFilename(item.name);
-            const iconPath = filename;
-
             const card = document.createElement('div');
             card.className = 'item-card';
             card.dataset.id = item.id;
 
             card.innerHTML = `
                 <div class="item-header">
-                    <div class="item-icon" style="background-image: url('${iconPath}')"></div>
+                    <div class="item-icon" style="background-image: url('${item.icon}')"></div>
                     <div class="item-name">${item.name}</div>
                 </div>
                 <div class="input-group">
@@ -353,7 +342,7 @@
                 const q = parseInt(qInput.value) || 0;
                 const p = parseInt(pInput.value) || 0;
                 const subtotal = q * p;
-                // Форматируем с пробелами для удобства чтения (например: "15 600")
+                // Форматируем для отображения: "15 600"
                 result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
                 updateTotal();
             };
@@ -369,23 +358,15 @@
     function updateTotal() {
         let total = 0;
         document.querySelectorAll('.result').forEach(el => {
-            // Парсим число из строки (удаляем пробелы)
-            const valStr = el.textContent.replace(/\s/g, ''); // Убираем все пробелы
+            const valStr = el.textContent.replace(/\s/g, ''); // Убираем пробелы
             const val = parseInt(valStr) || 0;
             total += val;
         });
-
-        // Выводим общую сумму БЕЗ форматирования (просто число)
-        totalCostElement.textContent = total;
-
-        // Дополнительно — можно добавить форматирование для красоты, но не для расчёта
-        // totalCostElement.textContent = total.toLocaleString('ru-RU').replace(/ /g, ' ');
-        // Но тогда при копировании будет "18 600", а не 18600 — что может мешать.
-        // Поэтому оставляем просто число.
+        totalCostElement.textContent = total; // Выводим чистое число без форматирования
     }
 
     copyBtn.addEventListener('click', async () => {
-        const text = totalCostElement.textContent; // Это уже чистое число, например "18600"
+        const text = totalCostElement.textContent;
         try {
             await navigator.clipboard.writeText(text);
             const original = copyBtn.innerHTML;
