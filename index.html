@@ -223,12 +223,36 @@
         .copy-btn:active {
             transform: scale(0.95);
         }
+        
 
         @media (max-width: 600px) {
             .container {
                 grid-template-columns: 1fr;
             }
         }
+.clear-btn {
+    background: rgba(255, 87, 34, 0.2);
+    border: 1px solid #ff5722;
+    color: #ff5722;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 8px;
+}
+
+.clear-btn:hover {
+    background: rgba(255, 87, 34, 0.3);
+    transform: scale(1.1);
+}
+
+.clear-btn:active {
+    transform: scale(0.95);
+}        
     </style>
 </head>
 <body>
@@ -260,6 +284,7 @@
         <div class="total-value-container">
             <div class="total-value" id="total-cost">0</div>
             <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
+            <button class="clear-btn" id="clear-quantities" title="Очистить все количества">🧹</button>
         </div>
     </div>
 
