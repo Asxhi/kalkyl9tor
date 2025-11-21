@@ -278,6 +278,106 @@
     background: rgba(255,235,59,0.2);
     box-shadow: 0 0 15px rgba(255,235,59,0.7);
 }
+        /* Кнопка переключения режима */
+.mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid rgba(0, 255, 255, 0.5);
+    color: #00ffff;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+}
+
+.mode-toggle:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.mode-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.mode-toggle:hover::before {
+    left: 100%;
+}
+
+/* Стили для компактного режима */
+.container.compact .item-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    margin-bottom: 8px;
+    transition: background 0.2s;
+}
+
+.container.compact .item-card:hover {
+    background: rgba(255,255,255,0.07);
+}
+
+.container.compact .item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.container.compact .item-name {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.container.compact .input-group {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.container.compact .input-label {
+    font-size: 0.75rem;
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.container.compact .input-field {
+    width: 80px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+}
+
+.container.compact .result {
+    font-size: 1rem;
+    margin: 0;
+    padding: 6px 12px;
+    background: rgba(255,235,59,0.1);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-yellow);
+    min-width: 80px;
+    text-align: right;
+}
 
         @media (max-width: 600px) {
             .container {
@@ -289,6 +389,7 @@
 <body>
     <div class="header">
         <h1>Игровой калькулятор</h1>
+        <button class="mode-toggle" id="toggle-mode">Компактный режим</button>
     </div>
 
     <div class="selector">
@@ -335,9 +436,10 @@
     const totalCostElement = document.getElementById('total-cost');
     const copyBtn = document.getElementById('copy-total');
     const clearBtn = document.getElementById('clear-quantities');
+    const modeToggle = document.getElementById('toggle-mode');
 
-    // Начальное состояние: все предметы активны
-    let activeItems = new Set();
+    let activeItems = new Set(ITEMS.map(item => item.id));
+    let isCompactMode = false;
 
     function renderSelector() {
         selectorList.innerHTML = '';
@@ -375,22 +477,38 @@
             card.className = 'item-card';
             card.dataset.id = item.id;
 
-            card.innerHTML = `
-                <div class="item-header">
+            if (isCompactMode) {
+                card.innerHTML = `
                     <div class="item-icon" style="background-image: url('${item.icon}')"></div>
                     <div class="item-name">${item.name}</div>
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Количество:</label>
-                    <input type="number" class="input-field quantity" min="0" step="1">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Цена за штуку:</label>
-                    <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                </div>
-                <div class="result">0</div>
-                <div class="contacts">Контакты или заметки...</div>
-            `;
+                    <div class="input-group">
+                        <label class="input-label">Кол-во:</label>
+                        <input type="number" class="input-field quantity" min="0" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Цена:</label>
+                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                    </div>
+                    <div class="result">0</div>
+                `;
+            } else {
+                card.innerHTML = `
+                    <div class="item-header">
+                        <div class="item-icon" style="background-image: url('${item.icon}')"></div>
+                        <div class="item-name">${item.name}</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Количество:</label>
+                        <input type="number" class="input-field quantity" min="0" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Цена за штуку:</label>
+                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                    </div>
+                    <div class="result">0</div>
+                    <div class="contacts">Контакты или заметки...</div>
+                `;
+            }
 
             const qInput = card.querySelector('.quantity');
             const pInput = card.querySelector('.price');
@@ -441,6 +559,18 @@
         } catch (e) {
             alert('Не удалось скопировать. Попробуйте вручную.');
         }
+    });
+
+    modeToggle.addEventListener('click', () => {
+        isCompactMode = !isCompactMode;
+        if (isCompactMode) {
+            container.classList.add('compact');
+            modeToggle.textContent = 'Стандартный режим';
+        } else {
+            container.classList.remove('compact');
+            modeToggle.textContent = 'Компактный режим';
+        }
+        renderActiveItems();
     });
 
     renderSelector();
