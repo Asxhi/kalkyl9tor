@@ -307,7 +307,7 @@
     const clearBtn = document.getElementById('clear-quantities');
 
     // Начальное состояние: все предметы выбраны (можно изменить)
-    let activeItems = new Set(ITEMS.map(item => item.id));
+     let activeItems = new Set();
 
     function renderSelector() {
         selectorList.innerHTML = '';
