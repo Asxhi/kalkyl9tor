@@ -409,7 +409,7 @@
         const clearBtn = document.getElementById('clear-quantities');
         const modeToggle = document.getElementById('toggle-mode');
 
-        let activeItems = new Set(ITEMS.map(item => item.id));
+        let activeItems = new Set();
         let isCompactMode = false;
 
         function renderSelector() {
