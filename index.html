@@ -277,139 +277,140 @@
     </div>
 
     <script>
-        const ITEMS = [
-            { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
-            { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
-            { id: 'yeast', name: 'Дрожжи', price: 800, icon: 'drozhzhi.png' },
-            { id: 'hoof', name: 'Копыто сильного кабана', price: 1200, icon: 'kopyto-kabana.png' },
-            { id: 'bolts', name: 'Набор болтов', price: 700, icon: 'nabor-boltov.png' },
-            { id: 'wormwood', name: 'Янтарная полынь', price: 1500, icon: 'yantarnaya-polyin.png' },
-            { id: 'chertocvet', name: 'Чертоцвет', price: 2000, icon: 'chertotsvet.png' },
-            { id: 'ammonia', name: 'Аммиак', price: 900, icon: 'ammiak.png' },
-            { id: 'lemon', name: 'Мякоть лимонника', price: 1000, icon: 'myakot-limonnika.png' },
-            { id: 'slant', name: 'Мякоть сластены', price: 8000, icon: 'myakot-slasteny.png' },
-            { id: 'salt', name: 'Мякоть солевика', price: 500, icon: 'myakot-solevika.png' },
-            { id: 'cube', name: 'Мякоть куборбуза', price: 2500, icon: 'myakot-kuborbuz.png' },
-            { id: 'spices', name: 'Набор специй', price: 1100, icon: 'nabor-spetsiy.png' },
-            { id: 'plasma', name: 'Аномальная плазма', price: 4000, icon: 'anomalnaya-plazma.png' },
-            { id: 'gnosis', name: 'Гнозис', price: 10000, icon: 'gnosis.png' },
-            { id: 'fish', name: 'Полутухлая рыба', price: 300, icon: 'polutukhlaya-ryba.png' },
-            { id: 'millet', name: 'Банка с пшеном', price: 400, icon: 'banka-s-pshenom.png' },
-            { id: 'solution', name: 'Колба с раствором', price: 1300, icon: 'kolba-s-rastvorom.png' },
-            { id: 'acid', name: 'Азотная кислота', price: 1800, icon: 'azotnaya-kislota.png' },
-            { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
-        ];
+    const ITEMS = [
+        { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
+        { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
+        { id: 'yeast', name: 'Дрожжи', price: 800, icon: 'drozhzhi.png' },
+        { id: 'hoof', name: 'Копыто сильного кабана', price: 1200, icon: 'kopyto-kabana.png' },
+        { id: 'bolts', name: 'Набор болтов', price: 700, icon: 'nabor-boltov.png' },
+        { id: 'wormwood', name: 'Янтарная полынь', price: 1500, icon: 'yantarnaya-polyin.png' },
+        { id: 'chertocvet', name: 'Чертоцвет', price: 2000, icon: 'chertotsvet.png' },
+        { id: 'ammonia', name: 'Аммиак', price: 900, icon: 'ammiak.png' },
+        { id: 'lemon', name: 'Мякоть лимонника', price: 1000, icon: 'myakot-limonnika.png' },
+        { id: 'slant', name: 'Мякоть сластены', price: 8000, icon: 'myakot-slasteny.png' },
+        { id: 'salt', name: 'Мякоть солевика', price: 500, icon: 'myakot-solevika.png' },
+        { id: 'cube', name: 'Мякоть куборбуза', price: 2500, icon: 'myakot-kuborbuz.png' },
+        { id: 'spices', name: 'Набор специй', price: 1100, icon: 'nabor-spetsiy.png' },
+        { id: 'plasma', name: 'Аномальная плазма', price: 4000, icon: 'anomalnaya-plazma.png' },
+        { id: 'gnosis', name: 'Гнозис', price: 10000, icon: 'gnosis.png' },
+        { id: 'fish', name: 'Полутухлая рыба', price: 300, icon: 'polutukhlaya-ryba.png' },
+        { id: 'millet', name: 'Банка с пшеном', price: 400, icon: 'banka-s-pshenom.png' },
+        { id: 'solution', name: 'Колба с раствором', price: 1300, icon: 'kolba-s-rastvorom.png' },
+        { id: 'acid', name: 'Азотная кислота', price: 1800, icon: 'azotnaya-kislota.png' },
+        { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
+    ];
 
-        const selectorList = document.getElementById('selector-list');
-        const container = document.getElementById('items-container');
-        const totalCostElement = document.getElementById('total-cost');
-        const copyBtn = document.getElementById('copy-total');
-        const clearBtn = document.getElementById('clear-quantities');
+    const selectorList = document.getElementById('selector-list');
+    const container = document.getElementById('items-container');
+    const totalCostElement = document.getElementById('total-cost');
+    const copyBtn = document.getElementById('copy-total');
+    const clearBtn = document.getElementById('clear-quantities');
 
-        let activeItems = new Set();
+    // Начальное состояние: все предметы выбраны (можно изменить)
+    let activeItems = new Set(ITEMS.map(item => item.id));
 
-        function renderSelector() {
-            selectorList.innerHTML = '';
-            ITEMS.forEach(item => {
-                const label = document.createElement('label');
-                label.className = 'item-check';
-                label.innerHTML = `
-                    <input type="checkbox" value="${item.id}">
-                    ${item.name}
-                `;
-                const checkbox = label.querySelector('input');
-                checkbox.checked = activeItems.has(item.id);
-                checkbox.addEventListener('change', () => {
-                    if (checkbox.checked) {
-                        activeItems.add(item.id);
-                    } else {
-                        activeItems.delete(item.id);
-                    }
-                    renderActiveItems();
-                });
-                selectorList.appendChild(label);
+    function renderSelector() {
+        selectorList.innerHTML = '';
+        ITEMS.forEach(item => {
+            const label = document.createElement('label');
+            label.className = 'item-check';
+            label.innerHTML = `
+                <input type="checkbox" value="${item.id}" ${activeItems.has(item.id) ? 'checked' : ''}>
+                ${item.name}
+            `;
+            const checkbox = label.querySelector('input');
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    activeItems.add(item.id);
+                } else {
+                    activeItems.delete(item.id);
+                }
+                renderActiveItems();
             });
-        }
-
-        function renderActiveItems() {
-            container.innerHTML = '';
-            ITEMS.forEach(item => {
-                if (!activeItems.has(item.id)) return;
-
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.dataset.id = item.id;
-
-                card.innerHTML = `
-                    <div class="item-header">
-                        <div class="item-icon" style="background-image: url('${item.icon}')"></div>
-                        <div class="item-name">${item.name}</div>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Количество:</label>
-                        <input type="number" class="input-field quantity" min="0" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Цена за штуку:</label>
-                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                    </div>
-                    <div class="result">0</div>
-                    <div class="contacts">Контакты или заметки...</div>
-                `;
-
-                const qInput = card.querySelector('.quantity');
-                const pInput = card.querySelector('.price');
-                const result = card.querySelector('.result');
-
-                qInput.addEventListener('focus', () => qInput.select());
-
-                const update = () => {
-                    const q = parseInt(qInput.value) || 0;
-                    const p = parseInt(pInput.value) || 0;
-                    const subtotal = q * p;
-                    result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
-                    updateTotal();
-                };
-
-                qInput.addEventListener('input', update);
-                pInput.addEventListener('input', update);
-
-                container.appendChild(card);
-            });
-            updateTotal();
-        }
-
-        function updateTotal() {
-            let total = 0;
-            document.querySelectorAll('.result').forEach(el => {
-                const valStr = el.textContent.replace(/\s/g, '');
-                const val = parseInt(valStr) || 0;
-                total += val;
-            });
-            totalCostElement.textContent = total;
-        }
-
-        clearBtn.addEventListener('click', () => {
-            document.querySelectorAll('.quantity').forEach(input => {
-                input.value = '';
-                input.dispatchEvent(new Event('input'));
-            });
+            selectorList.appendChild(label);
         });
+    }
 
-        copyBtn.addEventListener('click', async () => {
-            const text = totalCostElement.textContent;
-            try {
-                await navigator.clipboard.writeText(text);
-                const original = copyBtn.innerHTML;
-                copyBtn.innerHTML = '✓';
-                setTimeout(() => copyBtn.innerHTML = original, 1000);
-            } catch (e) {
-                alert('Не удалось скопировать. Попробуйте вручную.');
-            }
+    function renderActiveItems() {
+        container.innerHTML = '';
+        ITEMS.forEach(item => {
+            if (!activeItems.has(item.id)) return;
+
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.dataset.id = item.id;
+
+            card.innerHTML = `
+                <div class="item-header">
+                    <div class="item-icon" style="background-image: url('${item.icon}')"></div>
+                    <div class="item-name">${item.name}</div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Количество:</label>
+                    <input type="number" class="input-field quantity" min="0" step="1">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Цена за штуку:</label>
+                    <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                </div>
+                <div class="result">0</div>
+                <div class="contacts">Контакты или заметки...</div>
+            `;
+
+            const qInput = card.querySelector('.quantity');
+            const pInput = card.querySelector('.price');
+            const result = card.querySelector('.result');
+
+            qInput.addEventListener('focus', () => qInput.select());
+
+            const update = () => {
+                const q = parseInt(qInput.value) || 0;
+                const p = parseInt(pInput.value) || 0;
+                const subtotal = q * p;
+                result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
+                updateTotal();
+            };
+
+            qInput.addEventListener('input', update);
+            pInput.addEventListener('input', update);
+
+            container.appendChild(card);
         });
+        updateTotal();
+    }
 
-        renderSelector();
-        renderActiveItems();
-    </script>
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.result').forEach(el => {
+            const valStr = el.textContent.replace(/\s/g, '');
+            const val = parseInt(valStr) || 0;
+            total += val;
+        });
+        totalCostElement.textContent = total;
+    }
+
+    clearBtn.addEventListener('click', () => {
+        document.querySelectorAll('.quantity').forEach(input => {
+            input.value = '';
+            input.dispatchEvent(new Event('input'));
+        });
+    });
+
+    copyBtn.addEventListener('click', async () => {
+        const text = totalCostElement.textContent;
+        try {
+            await navigator.clipboard.writeText(text);
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '✓';
+            setTimeout(() => copyBtn.innerHTML = original, 1000);
+        } catch (e) {
+            alert('Не удалось скопировать. Попробуйте вручную.');
+        }
+    });
+
+    // Запуск при загрузке страницы
+    renderSelector();
+    renderActiveItems();
+</script>
 </body>
 </html>
