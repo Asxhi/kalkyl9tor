@@ -84,12 +84,43 @@
             left: 100%;
         }
 
+        /* Стили для сворачиваемого селектора */
         .selector {
             background: var(--card-bg);
             padding: 16px;
             border-radius: 12px;
             margin-bottom: 25px;
             border: 1px solid var(--border-glow);
+            overflow: hidden;
+        }
+
+        .selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 12px;
+        }
+
+        .selector-header h2 {
+            margin: 0;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .toggle-selector-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-selector-btn.rotated {
+            transform: rotate(180deg);
         }
 
         .items-list {
@@ -97,8 +128,16 @@
             flex-wrap: wrap;
             gap: 12px;
             justify-content: center;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
         }
 
+        .items-list.expanded {
+            max-height: 500px;
+        }
+
+        /* Кнопки выбора предметов */
         .item-toggle {
             display: inline-flex;
             align-items: center;
@@ -130,27 +169,28 @@
             box-shadow: 0 0 15px rgba(255,235,59,0.7);
         }
 
+        /* Основной контейнер */
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 16px;
             margin-bottom: 30px;
         }
 
         .item-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 15px;
+            padding: 14px;
             border: 1px solid var(--border-glow);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
         }
 
         .item-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
@@ -171,30 +211,32 @@
         }
 
         .input-group {
-            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
         }
 
         .input-label {
             display: block;
-            font-size: 0.85rem;
-            margin-bottom: 5px;
+            font-size: 0.82rem;
+            margin-bottom: 4px;
             color: var(--text-secondary);
         }
 
         .input-field {
             width: 100%;
-            padding: 9px 12px;
+            padding: 8px 10px;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 6px;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .input-field:focus {
             outline: none;
             border-color: var(--accent-yellow);
-            box-shadow: 0 0 6px rgba(255,235,59,0.4);
+            box-shadow: 0 0 5px rgba(255,235,59,0.3);
         }
 
         .result {
@@ -202,36 +244,38 @@
             font-weight: bold;
             color: var(--accent-yellow);
             text-align: center;
-            margin: 15px 0;
-            padding: 10px;
+            margin: 12px 0;
+            padding: 8px;
             background: rgba(255,235,59,0.1);
             border-radius: 6px;
+            border-left: 3px solid var(--accent-yellow);
         }
 
         .contacts {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-secondary);
-            background: rgba(255,255,255,0.05);
-            padding: 8px;
-            border-radius: 6px;
+            background: rgba(255,255,255,0.03);
+            padding: 6px;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.08);
         }
 
-        /* Стили для компактного режима */
+        /* Компактный режим */
         .container.compact {
-            display: flex;
-            flex-direction: column;
-            grid-template-columns: 1fr !important;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .container.compact .item-card {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             padding: 12px;
             border-radius: 10px;
             background: var(--card-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
         }
 
         .container.compact .item-icon {
@@ -240,8 +284,8 @@
         }
 
         .container.compact .item-name {
-            font-size: 1rem;
-            min-width: 160px;
+            font-size: 0.95rem;
+            min-width: 140px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -252,33 +296,38 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 4px;
+            min-width: 100px;
         }
 
         .container.compact .input-label {
             font-size: 0.75rem;
+            margin-bottom: 3px;
         }
 
         .container.compact .input-field {
-            width: 80px;
-            padding: 6px 10px;
-            font-size: 0.9rem;
+            width: 85px;
+            padding: 6px 8px;
+            font-size: 0.88rem;
         }
 
         .container.compact .result {
             font-size: 1.1rem;
             margin: 0;
             padding: 8px 12px;
-            min-width: 90px;
+            min-width: 85px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* Общая стоимость */
         .total-section {
             background: var(--card-bg);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
-            margin-top: 30px;
+            margin-top: 25px;
             border-top: 2px solid rgba(255,255,255,0.1);
             display: flex;
             flex-direction: column;
@@ -350,7 +399,10 @@
             transform: scale(0.95);
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
+            .container.compact {
+                grid-template-columns: 1fr;
+            }
             .container {
                 grid-template-columns: 1fr;
             }
@@ -364,7 +416,11 @@
     </div>
 
     <div class="selector">
-        <div class="items-list" id="selector-list"></div>
+        <div class="selector-header" id="selector-header">
+            <h2>Выбор предметов</h2>
+            <button class="toggle-selector-btn">▼</button>
+        </div>
+        <div class="items-list" id="items-list"></div>
     </div>
 
     <div class="container" id="items-container"></div>
@@ -402,14 +458,16 @@
             { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
         ];
 
-        const selectorList = document.getElementById('selector-list');
+        const selectorList = document.getElementById('items-list');
         const container = document.getElementById('items-container');
         const totalCostElement = document.getElementById('total-cost');
         const copyBtn = document.getElementById('copy-total');
         const clearBtn = document.getElementById('clear-quantities');
         const modeToggle = document.getElementById('toggle-mode');
+        const selectorHeader = document.getElementById('selector-header');
+        const toggleBtn = document.querySelector('.toggle-selector-btn');
 
-        let activeItems = new Set();
+        let activeItems = new Set(); // ✅ Ничего не выбрано по умолчанию
         let isCompactMode = false;
 
         function renderSelector() {
@@ -542,6 +600,11 @@
                 modeToggle.textContent = 'Компактный режим';
             }
             renderActiveItems();
+        });
+
+        selectorHeader.addEventListener('click', () => {
+            selectorList.classList.toggle('expanded');
+            toggleBtn.classList.toggle('rotated');
         });
 
         renderSelector();
