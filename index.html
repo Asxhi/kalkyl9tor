@@ -247,6 +247,37 @@
         .clear-btn:active {
             transform: scale(0.95);
         }
+        /* Красивые кнопки выбора предметов */
+.item-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    color: var(--text-secondary);
+}
+
+.item-toggle:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+}
+
+.item-toggle.selected {
+    background: rgba(255,255,255,0.1);
+    color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 10px rgba(255,235,59,0.5);
+}
+
+.item-toggle.selected:hover {
+    background: rgba(255,235,59,0.2);
+    box-shadow: 0 0 15px rgba(255,235,59,0.7);
+}
 
         @media (max-width: 600px) {
             .container {
@@ -306,28 +337,33 @@
     const copyBtn = document.getElementById('copy-total');
     const clearBtn = document.getElementById('clear-quantities');
 
-    // Начальное состояние: все предметы выбраны (можно изменить)
-     let activeItems = new Set();
+    // Начальное состояние: все предметы активны
+    let activeItems = new Set(ITEMS.map(item => item.id));
 
     function renderSelector() {
         selectorList.innerHTML = '';
         ITEMS.forEach(item => {
-            const label = document.createElement('label');
-            label.className = 'item-check';
-            label.innerHTML = `
-                <input type="checkbox" value="${item.id}" ${activeItems.has(item.id) ? 'checked' : ''}>
-                ${item.name}
-            `;
-            const checkbox = label.querySelector('input');
-            checkbox.addEventListener('change', () => {
-                if (checkbox.checked) {
-                    activeItems.add(item.id);
-                } else {
+            const toggle = document.createElement('div');
+            toggle.className = 'item-toggle';
+            toggle.dataset.id = item.id;
+            toggle.textContent = item.name;
+
+            if (activeItems.has(item.id)) {
+                toggle.classList.add('selected');
+            }
+
+            toggle.addEventListener('click', () => {
+                if (activeItems.has(item.id)) {
                     activeItems.delete(item.id);
+                    toggle.classList.remove('selected');
+                } else {
+                    activeItems.add(item.id);
+                    toggle.classList.add('selected');
                 }
                 renderActiveItems();
             });
-            selectorList.appendChild(label);
+
+            selectorList.appendChild(toggle);
         });
     }
 
@@ -408,7 +444,6 @@
         }
     });
 
-    // Запуск при загрузке страницы
     renderSelector();
     renderActiveItems();
 </script>
