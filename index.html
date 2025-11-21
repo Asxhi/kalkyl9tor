@@ -234,6 +234,18 @@
 <body>
     <div class="header">
         <h1>Игровой калькулятор</h1>
+        <!-- Новая кнопка -->
+    <button id="clear-quantities" style="
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.2s;
+    ">Очистить количества</button>
     </div>
 
     <div class="selector">
@@ -252,7 +264,6 @@
     </div>
 
     <script>
-    // 🔧 СПИСОК ПРЕДМЕТОВ — теперь с явным указанием имени файла
     const ITEMS = [
         { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
         { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
@@ -280,6 +291,7 @@
     const container = document.getElementById('items-container');
     const totalCostElement = document.getElementById('total-cost');
     const copyBtn = document.getElementById('copy-total');
+    const clearBtn = document.getElementById('clear-quantities'); // ← Новая кнопка
 
     let activeItems = new Set();
 
@@ -342,7 +354,6 @@
                 const q = parseInt(qInput.value) || 0;
                 const p = parseInt(pInput.value) || 0;
                 const subtotal = q * p;
-                // Форматируем для отображения: "15 600"
                 result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
                 updateTotal();
             };
@@ -358,12 +369,21 @@
     function updateTotal() {
         let total = 0;
         document.querySelectorAll('.result').forEach(el => {
-            const valStr = el.textContent.replace(/\s/g, ''); // Убираем пробелы
+            const valStr = el.textContent.replace(/\s/g, '');
             const val = parseInt(valStr) || 0;
             total += val;
         });
-        totalCostElement.textContent = total; // Выводим чистое число без форматирования
+        totalCostElement.textContent = total;
     }
+
+    // Кнопка "Очистить количества"
+    clearBtn.addEventListener('click', () => {
+        document.querySelectorAll('.quantity').forEach(input => {
+            input.value = ''; // Очищаем поле — не 0, а пустая строка
+            // Симулируем событие input, чтобы пересчитать
+            input.dispatchEvent(new Event('input'));
+        });
+    });
 
     copyBtn.addEventListener('click', async () => {
         const text = totalCostElement.textContent;
