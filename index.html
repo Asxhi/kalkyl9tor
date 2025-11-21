@@ -44,18 +44,52 @@
             color: transparent;
         }
 
+        .mode-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            color: #00ffff;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .mode-toggle:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .mode-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .mode-toggle:hover::before {
+            left: 100%;
+        }
+
         .selector {
             background: var(--card-bg);
             padding: 16px;
             border-radius: 12px;
             margin-bottom: 25px;
             border: 1px solid var(--border-glow);
-        }
-
-        .selector h2 {
-            margin-bottom: 12px;
-            color: var(--accent-blue);
-            font-size: 1.2rem;
         }
 
         .items-list {
@@ -65,24 +99,35 @@
             justify-content: center;
         }
 
-        .item-check {
-            display: flex;
+        .item-toggle {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(255,255,255,0.05);
-            padding: 8px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             user-select: none;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            color: var(--text-secondary);
         }
 
-        .item-check:hover {
+        .item-toggle:hover {
             background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
         }
 
-        .item-check input {
-            margin: 0;
+        .item-toggle.selected {
+            background: rgba(255,255,255,0.1);
+            color: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 10px rgba(255,235,59,0.5);
+        }
+
+        .item-toggle.selected:hover {
+            background: rgba(255,235,59,0.2);
+            box-shadow: 0 0 15px rgba(255,235,59,0.7);
         }
 
         .container {
@@ -171,6 +216,63 @@
             border-radius: 6px;
         }
 
+        /* Стили для компактного режима */
+        .container.compact {
+            display: flex;
+            flex-direction: column;
+            grid-template-columns: 1fr !important;
+        }
+
+        .container.compact .item-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            margin-bottom: 12px;
+        }
+
+        .container.compact .item-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .container.compact .item-name {
+            font-size: 1rem;
+            min-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .container.compact .input-group {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .container.compact .input-label {
+            font-size: 0.75rem;
+        }
+
+        .container.compact .input-field {
+            width: 80px;
+            padding: 6px 10px;
+            font-size: 0.9rem;
+        }
+
+        .container.compact .result {
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 8px 12px;
+            min-width: 90px;
+            text-align: center;
+        }
+
         .total-section {
             background: var(--card-bg);
             padding: 20px;
@@ -247,137 +349,6 @@
         .clear-btn:active {
             transform: scale(0.95);
         }
-        /* Красивые кнопки выбора предметов */
-.item-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.05);
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    color: var(--text-secondary);
-}
-
-.item-toggle:hover {
-    background: rgba(255,255,255,0.1);
-    color: var(--text-primary);
-}
-
-.item-toggle.selected {
-    background: rgba(255,255,255,0.1);
-    color: var(--accent-yellow);
-    border-color: var(--accent-yellow);
-    box-shadow: 0 0 10px rgba(255,235,59,0.5);
-}
-
-.item-toggle.selected:hover {
-    background: rgba(255,235,59,0.2);
-    box-shadow: 0 0 15px rgba(255,235,59,0.7);
-}
-        /* Кнопка переключения режима */
-.mode-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 2px solid rgba(0, 255, 255, 0.5);
-    color: #00ffff;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-}
-
-.mode-toggle:hover {
-    background: rgba(0, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
-    color: #ffffff;
-    transform: scale(1.05);
-}
-
-.mode-toggle::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.mode-toggle:hover::before {
-    left: 100%;
-}
-
-/* Стили для компактного режима */
-.container.compact .item-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 15px;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    background: rgba(255,255,255,0.03);
-    margin-bottom: 8px;
-    transition: background 0.2s;
-}
-
-.container.compact .item-card:hover {
-    background: rgba(255,255,255,0.07);
-}
-
-.container.compact .item-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-}
-
-.container.compact .item-name {
-    font-size: 0.9rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
-}
-
-.container.compact .input-group {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.container.compact .input-label {
-    font-size: 0.75rem;
-    margin: 0;
-    color: var(--text-secondary);
-}
-
-.container.compact .input-field {
-    width: 80px;
-    padding: 6px 8px;
-    font-size: 0.85rem;
-}
-
-.container.compact .result {
-    font-size: 1rem;
-    margin: 0;
-    padding: 6px 12px;
-    background: rgba(255,235,59,0.1);
-    border-radius: 4px;
-    border-left: 3px solid var(--accent-yellow);
-    min-width: 80px;
-    text-align: right;
-}
 
         @media (max-width: 600px) {
             .container {
@@ -408,173 +379,173 @@
     </div>
 
     <script>
-    const ITEMS = [
-        { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
-        { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
-        { id: 'yeast', name: 'Дрожжи', price: 800, icon: 'drozhzhi.png' },
-        { id: 'hoof', name: 'Копыто сильного кабана', price: 1200, icon: 'kopyto-kabana.png' },
-        { id: 'bolts', name: 'Набор болтов', price: 700, icon: 'nabor-boltov.png' },
-        { id: 'wormwood', name: 'Янтарная полынь', price: 1500, icon: 'yantarnaya-polyin.png' },
-        { id: 'chertocvet', name: 'Чертоцвет', price: 2000, icon: 'chertotsvet.png' },
-        { id: 'ammonia', name: 'Аммиак', price: 900, icon: 'ammiak.png' },
-        { id: 'lemon', name: 'Мякоть лимонника', price: 1000, icon: 'myakot-limonnika.png' },
-        { id: 'slant', name: 'Мякоть сластены', price: 8000, icon: 'myakot-slasteny.png' },
-        { id: 'salt', name: 'Мякоть солевика', price: 500, icon: 'myakot-solevika.png' },
-        { id: 'cube', name: 'Мякоть куборбуза', price: 2500, icon: 'myakot-kuborbuz.png' },
-        { id: 'spices', name: 'Набор специй', price: 1100, icon: 'nabor-spetsiy.png' },
-        { id: 'plasma', name: 'Аномальная плазма', price: 4000, icon: 'anomalnaya-plazma.png' },
-        { id: 'gnosis', name: 'Гнозис', price: 10000, icon: 'gnosis.png' },
-        { id: 'fish', name: 'Полутухлая рыба', price: 300, icon: 'polutukhlaya-ryba.png' },
-        { id: 'millet', name: 'Банка с пшеном', price: 400, icon: 'banka-s-pshenom.png' },
-        { id: 'solution', name: 'Колба с раствором', price: 1300, icon: 'kolba-s-rastvorom.png' },
-        { id: 'acid', name: 'Азотная кислота', price: 1800, icon: 'azotnaya-kislota.png' },
-        { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
-    ];
+        const ITEMS = [
+            { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
+            { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
+            { id: 'yeast', name: 'Дрожжи', price: 800, icon: 'drozhzhi.png' },
+            { id: 'hoof', name: 'Копыто сильного кабана', price: 1200, icon: 'kopyto-kabana.png' },
+            { id: 'bolts', name: 'Набор болтов', price: 700, icon: 'nabor-boltov.png' },
+            { id: 'wormwood', name: 'Янтарная полынь', price: 1500, icon: 'yantarnaya-polyin.png' },
+            { id: 'chertocvet', name: 'Чертоцвет', price: 2000, icon: 'chertotsvet.png' },
+            { id: 'ammonia', name: 'Аммиак', price: 900, icon: 'ammiak.png' },
+            { id: 'lemon', name: 'Мякоть лимонника', price: 1000, icon: 'myakot-limonnika.png' },
+            { id: 'slant', name: 'Мякоть сластены', price: 8000, icon: 'myakot-slasteny.png' },
+            { id: 'salt', name: 'Мякоть солевика', price: 500, icon: 'myakot-solevika.png' },
+            { id: 'cube', name: 'Мякоть куборбуза', price: 2500, icon: 'myakot-kuborbuz.png' },
+            { id: 'spices', name: 'Набор специй', price: 1100, icon: 'nabor-spetsiy.png' },
+            { id: 'plasma', name: 'Аномальная плазма', price: 4000, icon: 'anomalnaya-plazma.png' },
+            { id: 'gnosis', name: 'Гнозис', price: 10000, icon: 'gnosis.png' },
+            { id: 'fish', name: 'Полутухлая рыба', price: 300, icon: 'polutukhlaya-ryba.png' },
+            { id: 'millet', name: 'Банка с пшеном', price: 400, icon: 'banka-s-pshenom.png' },
+            { id: 'solution', name: 'Колба с раствором', price: 1300, icon: 'kolba-s-rastvorom.png' },
+            { id: 'acid', name: 'Азотная кислота', price: 1800, icon: 'azotnaya-kislota.png' },
+            { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
+        ];
 
-    const selectorList = document.getElementById('selector-list');
-    const container = document.getElementById('items-container');
-    const totalCostElement = document.getElementById('total-cost');
-    const copyBtn = document.getElementById('copy-total');
-    const clearBtn = document.getElementById('clear-quantities');
-    const modeToggle = document.getElementById('toggle-mode');
+        const selectorList = document.getElementById('selector-list');
+        const container = document.getElementById('items-container');
+        const totalCostElement = document.getElementById('total-cost');
+        const copyBtn = document.getElementById('copy-total');
+        const clearBtn = document.getElementById('clear-quantities');
+        const modeToggle = document.getElementById('toggle-mode');
 
-    let activeItems = new Set(ITEMS.map(item => item.id));
-    let isCompactMode = false;
+        let activeItems = new Set(ITEMS.map(item => item.id));
+        let isCompactMode = false;
 
-    function renderSelector() {
-        selectorList.innerHTML = '';
-        ITEMS.forEach(item => {
-            const toggle = document.createElement('div');
-            toggle.className = 'item-toggle';
-            toggle.dataset.id = item.id;
-            toggle.textContent = item.name;
+        function renderSelector() {
+            selectorList.innerHTML = '';
+            ITEMS.forEach(item => {
+                const toggle = document.createElement('div');
+                toggle.className = 'item-toggle';
+                toggle.dataset.id = item.id;
+                toggle.textContent = item.name;
 
-            if (activeItems.has(item.id)) {
-                toggle.classList.add('selected');
-            }
-
-            toggle.addEventListener('click', () => {
                 if (activeItems.has(item.id)) {
-                    activeItems.delete(item.id);
-                    toggle.classList.remove('selected');
-                } else {
-                    activeItems.add(item.id);
                     toggle.classList.add('selected');
                 }
-                renderActiveItems();
+
+                toggle.addEventListener('click', () => {
+                    if (activeItems.has(item.id)) {
+                        activeItems.delete(item.id);
+                        toggle.classList.remove('selected');
+                    } else {
+                        activeItems.add(item.id);
+                        toggle.classList.add('selected');
+                    }
+                    renderActiveItems();
+                });
+
+                selectorList.appendChild(toggle);
             });
+        }
 
-            selectorList.appendChild(toggle);
-        });
-    }
+        function renderActiveItems() {
+            container.innerHTML = '';
+            ITEMS.forEach(item => {
+                if (!activeItems.has(item.id)) return;
 
-    function renderActiveItems() {
-        container.innerHTML = '';
-        ITEMS.forEach(item => {
-            if (!activeItems.has(item.id)) return;
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.dataset.id = item.id;
 
-            const card = document.createElement('div');
-            card.className = 'item-card';
-            card.dataset.id = item.id;
-
-            if (isCompactMode) {
-                card.innerHTML = `
-                    <div class="item-icon" style="background-image: url('${item.icon}')"></div>
-                    <div class="item-name">${item.name}</div>
-                    <div class="input-group">
-                        <label class="input-label">Кол-во:</label>
-                        <input type="number" class="input-field quantity" min="0" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Цена:</label>
-                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                    </div>
-                    <div class="result">0</div>
-                `;
-            } else {
-                card.innerHTML = `
-                    <div class="item-header">
+                if (isCompactMode) {
+                    card.innerHTML = `
                         <div class="item-icon" style="background-image: url('${item.icon}')"></div>
                         <div class="item-name">${item.name}</div>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Количество:</label>
-                        <input type="number" class="input-field quantity" min="0" step="1">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">Цена за штуку:</label>
-                        <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                    </div>
-                    <div class="result">0</div>
-                    <div class="contacts">Контакты или заметки...</div>
-                `;
+                        <div class="input-group">
+                            <label class="input-label">Кол-во:</label>
+                            <input type="number" class="input-field quantity" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Цена:</label>
+                            <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                        </div>
+                        <div class="result">0</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="item-header">
+                            <div class="item-icon" style="background-image: url('${item.icon}')"></div>
+                            <div class="item-name">${item.name}</div>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Количество:</label>
+                            <input type="number" class="input-field quantity" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Цена за штуку:</label>
+                            <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                        </div>
+                        <div class="result">0</div>
+                        <div class="contacts">Контакты или заметки...</div>
+                    `;
+                }
+
+                const qInput = card.querySelector('.quantity');
+                const pInput = card.querySelector('.price');
+                const result = card.querySelector('.result');
+
+                qInput.addEventListener('focus', () => qInput.select());
+
+                const update = () => {
+                    const q = parseInt(qInput.value) || 0;
+                    const p = parseInt(pInput.value) || 0;
+                    const subtotal = q * p;
+                    result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
+                    updateTotal();
+                };
+
+                qInput.addEventListener('input', update);
+                pInput.addEventListener('input', update);
+
+                container.appendChild(card);
+            });
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = 0;
+            document.querySelectorAll('.result').forEach(el => {
+                const valStr = el.textContent.replace(/\s/g, '');
+                const val = parseInt(valStr) || 0;
+                total += val;
+            });
+            totalCostElement.textContent = total;
+        }
+
+        clearBtn.addEventListener('click', () => {
+            document.querySelectorAll('.quantity').forEach(input => {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+            });
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            const text = totalCostElement.textContent;
+            try {
+                await navigator.clipboard.writeText(text);
+                const original = copyBtn.innerHTML;
+                copyBtn.innerHTML = '✓';
+                setTimeout(() => copyBtn.innerHTML = original, 1000);
+            } catch (e) {
+                alert('Не удалось скопировать. Попробуйте вручную.');
             }
-
-            const qInput = card.querySelector('.quantity');
-            const pInput = card.querySelector('.price');
-            const result = card.querySelector('.result');
-
-            qInput.addEventListener('focus', () => qInput.select());
-
-            const update = () => {
-                const q = parseInt(qInput.value) || 0;
-                const p = parseInt(pInput.value) || 0;
-                const subtotal = q * p;
-                result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
-                updateTotal();
-            };
-
-            qInput.addEventListener('input', update);
-            pInput.addEventListener('input', update);
-
-            container.appendChild(card);
         });
-        updateTotal();
-    }
 
-    function updateTotal() {
-        let total = 0;
-        document.querySelectorAll('.result').forEach(el => {
-            const valStr = el.textContent.replace(/\s/g, '');
-            const val = parseInt(valStr) || 0;
-            total += val;
+        modeToggle.addEventListener('click', () => {
+            isCompactMode = !isCompactMode;
+            if (isCompactMode) {
+                container.classList.add('compact');
+                modeToggle.textContent = 'Стандартный режим';
+            } else {
+                container.classList.remove('compact');
+                modeToggle.textContent = 'Компактный режим';
+            }
+            renderActiveItems();
         });
-        totalCostElement.textContent = total;
-    }
 
-    clearBtn.addEventListener('click', () => {
-        document.querySelectorAll('.quantity').forEach(input => {
-            input.value = '';
-            input.dispatchEvent(new Event('input'));
-        });
-    });
-
-    copyBtn.addEventListener('click', async () => {
-        const text = totalCostElement.textContent;
-        try {
-            await navigator.clipboard.writeText(text);
-            const original = copyBtn.innerHTML;
-            copyBtn.innerHTML = '✓';
-            setTimeout(() => copyBtn.innerHTML = original, 1000);
-        } catch (e) {
-            alert('Не удалось скопировать. Попробуйте вручную.');
-        }
-    });
-
-    modeToggle.addEventListener('click', () => {
-        isCompactMode = !isCompactMode;
-        if (isCompactMode) {
-            container.classList.add('compact');
-            modeToggle.textContent = 'Стандартный режим';
-        } else {
-            container.classList.remove('compact');
-            modeToggle.textContent = 'Компактный режим';
-        }
+        renderSelector();
         renderActiveItems();
-    });
-
-    renderSelector();
-    renderActiveItems();
-</script>
+    </script>
 </body>
 </html>
