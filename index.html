@@ -13,7 +13,6 @@
             --text-secondary: #cccccc;
             --accent-yellow: #ffeb3b;
             --accent-cyan: #00ffff;
-            --accent-green: #4caf50;
             --accent-red: #ff5722;
         }
 
@@ -98,59 +97,6 @@
             left: 100%;
         }
 
-        /* Сворачиваемый селектор */
-        .selector {
-            background: var(--card-bg);
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 1px solid var(--border-glow);
-            overflow: hidden;
-        }
-
-        .selector-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 12px;
-        }
-
-        .selector-header h2 {
-            margin: 0;
-            color: var(--accent-cyan);
-            font-size: 1.2rem;
-        }
-
-        .toggle-selector-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .toggle-selector-btn.rotated {
-            transform: rotate(180deg);
-        }
-
-        .items-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .items-list.expanded {
-            max-height: 500px;
-        }
-
         /* Кнопки выбора предметов */
         .item-toggle {
             display: inline-flex;
@@ -181,6 +127,16 @@
         .item-toggle.selected:hover {
             background: rgba(255,235,59,0.2);
             box-shadow: 0 0 15px rgba(255,235,59,0.7);
+        }
+
+        /* Список предметов (скрытый) */
+        .selector {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-glow);
+            overflow: hidden;
         }
 
         /* Основной контейнер */
@@ -416,126 +372,125 @@
             transform: scale(1.1);
         }
 
-       /* Кнопка "Сделка состоялась" — в стиле вкладок */
-.deal-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 2px solid rgba(0, 255, 255, 0.5);
-    color: var(--accent-cyan);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-}
+        /* Кнопка "Сделка состоялась" — в стиле вкладок */
+        .deal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            color: var(--accent-cyan);
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+        }
 
-.deal-btn:hover {
-    background: rgba(0, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
-    color: #ffffff;
-    transform: scale(1.03);
-}
+        .deal-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            color: #ffffff;
+            transform: scale(1.03);
+        }
 
-.deal-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
+        .deal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
 
-.deal-btn:hover::before {
-    left: 100%;
-}
+        .deal-btn:hover::before {
+            left: 100%;
+        }
 
-       /* Отчёт прибыли */
-.profit-section {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 30px;
-    border-top: 2px solid var(--border-glow);
-    display: none;
-}
+        /* Отчёт прибыли */
+        .profit-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border-top: 2px solid var(--border-glow);
+            display: none;
+        }
 
-.profit-section.active {
-    display: block;
-}
+        .profit-section.active {
+            display: block;
+        }
 
-.overall-profit {
-    text-align: center;
-    font-size: 2.2rem;
-    font-weight: bold;
-    margin-bottom: 25px;
-    padding: 15px;
-    border-radius: 10px;
-    background: rgba(255,235,59,0.05);
-    border: 1px solid rgba(255,235,59,0.2);
-    box-shadow: 0 0 10px rgba(255,235,59,0.3);
-    color: var(--accent-yellow);
-    transition: all 0.2s;
-}
+        .overall-profit {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255,235,59,0.05);
+            border: 1px solid rgba(255,235,59,0.2);
+            box-shadow: 0 0 10px rgba(255,235,59,0.3);
+            color: var(--accent-yellow);
+            transition: all 0.2s;
+        }
 
-.overall-profit:hover {
-    background: rgba(255,235,59,0.1);
-    box-shadow: 0 0 15px rgba(255,235,59,0.5);
-}
+        .overall-profit:hover {
+            background: rgba(255,235,59,0.1);
+            box-shadow: 0 0 15px rgba(255,235,59,0.5);
+        }
 
-.profit-item {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border-glow);
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 15px;
-    transition: background 0.2s;
-}
+        .profit-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glow);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
 
-.profit-item:hover {
-    background: rgba(255,255,255,0.07);
-}
+        .profit-item:hover {
+            background: rgba(255,255,255,0.07);
+        }
 
-.profit-item-name {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .profit-item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.profit-line {
-    display: flex;
-    justify-content: space-between;
-    margin: 6px 0;
-    font-size: 0.95rem;
-}
+        .profit-line {
+            display: flex;
+            margin: 6px 0;
+            font-size: 0.95rem;
+        }
 
-.profit-amount {
-    font-weight: bold;
-}
+        .profit-amount {
+            font-weight: bold;
+        }
 
-.profit-positive {
-    color: var(--accent-yellow);
-}
+        .profit-positive {
+            color: var(--accent-yellow);
+        }
 
-.profit-negative {
-    color: var(--accent-red);
-}
+        .profit-negative {
+            color: var(--accent-red);
+        }
 
-.no-data {
-    text-align: center;
-    color: var(--text-secondary);
-    font-style: italic;
-    padding: 20px;
-}
+        .no-data {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 20px;
+        }
 
         @media (max-width: 700px) {
             .container.compact {
@@ -562,12 +517,13 @@
         </div>
     </div>
 
-    <!-- Выбор предметов -->
-    <div class="selector">
-        <div class="selector-header" id="selector-header">
-            <h2>Выбор предметов</h2>
-            <button class="toggle-selector-btn">▼</button>
-        </div>
+    <!-- Кнопка "Выбор предметов" -->
+    <div style="text-align: center; margin-bottom: 25px;">
+        <button class="tab-btn" id="toggle-selector-btn">Выбор предметов</button>
+    </div>
+
+    <!-- Список предметов (скрытый) -->
+    <div class="selector" id="selector-container" style="display: none;">
         <div class="items-list" id="items-list"></div>
     </div>
 
@@ -626,7 +582,6 @@
 
         // Состояния
         let activeItems = new Set();
-        let isCompactMode = false;
         let currentTab = 'buy';
 
         // Отчёты
@@ -641,8 +596,8 @@
         const copyBtn = document.getElementById('copy-total');
         const clearBtn = document.getElementById('clear-quantities');
         const dealBtn = document.getElementById('deal-btn');
-        const selectorHeader = document.getElementById('selector-header');
-        const toggleBtn = document.querySelector('.toggle-selector-btn');
+        const toggleSelectorBtn = document.getElementById('toggle-selector-btn');
+        const selectorContainer = document.getElementById('selector-container');
         const tabButtons = document.querySelectorAll('.tab-btn');
         const profitSection = document.getElementById('profit-section');
         const overallProfit = document.getElementById('overall-profit');
@@ -856,8 +811,8 @@
                         <span>Куплено: ${item.boughtQty} шт. | Продано: ${item.soldQty} шт.</span>
                     </div>
                     <div class="profit-line">
-    <span>Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽ | Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽</span>
-</div>
+                        <span>Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽ | Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽</span>
+                    </div>
                     <div class="profit-line">
                         <span class="profit-amount ${profitClass}">Прибыль: ${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} ₽</span>
                     </div>
@@ -932,10 +887,14 @@
             }
         });
 
-        // Сворачивание селектора
-        selectorHeader.addEventListener('click', () => {
-            selectorList.classList.toggle('expanded');
-            toggleBtn.classList.toggle('rotated');
+        // Кнопка "Выбор предметов"
+        toggleSelectorBtn.addEventListener('click', () => {
+            const isExpanded = selectorContainer.style.display === 'block';
+            selectorContainer.style.display = isExpanded ? 'none' : 'block';
+
+            toggleSelectorBtn.innerHTML = isExpanded
+                ? 'Выбор предметов'
+                : 'Выбор предметов ▲';
         });
 
         // Инициализация
