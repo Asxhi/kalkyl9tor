@@ -563,18 +563,20 @@
         <div class="report-total">Прибыль/убыток</div>
     </div>
 
-    <!-- Блок текущей стоимости и кнопок -->
-    <div class="total-section">
-        <div class="total-header">
-            <button class="deal-btn" id="deal-btn">Сделка состоялась</button>
-            <div class="total-label">Текущая стоимость:</div>
-        </div>
-        <div class="total-value-container">
-            <div class="total-value" id="total-cost">0</div>
-            <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
-            <button class="clear-btn" id="clear-quantities" title="Очистить все количества">🧹</button>
+    <!-- Блок текущей стоимости и кнопок — по центру, над историей -->
+<div class="total-section">
+    <div class="total-wrapper">
+        <button class="deal-btn" id="deal-btn">Сделка состоялась</button>
+        <div class="total-info">
+            <span class="total-label">Текущая стоимость:</span>
+            <div class="total-value-container">
+                <div class="total-value" id="total-cost">0</div>
+                <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
+                <button class="clear-btn" id="clear-quantities" title="Очистить все количества">🧹</button>
+            </div>
         </div>
     </div>
+</div>
 
     <script>
         const ITEMS = [
