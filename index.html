@@ -12,7 +12,7 @@
             --text-primary: #ffffff;
             --text-secondary: #cccccc;
             --accent-yellow: #ffeb3b;
-            --accent-blue: #2196f3;
+            --accent-cyan: #00ffff;
             --accent-green: #4caf50;
             --accent-red: #ff5722;
         }
@@ -39,7 +39,7 @@
         .header h1 {
             font-size: 2.2rem;
             margin-bottom: 15px;
-            background: linear-gradient(to right, var(--accent-yellow), var(--accent-blue));
+            background: linear-gradient(to right, var(--accent-yellow), var(--accent-cyan));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -59,7 +59,7 @@
             justify-content: center;
             background: transparent;
             border: 2px solid rgba(0, 255, 255, 0.5);
-            color: #00ffff;
+            color: var(--accent-cyan);
             padding: 8px 20px;
             border-radius: 8px;
             font-weight: bold;
@@ -120,7 +120,7 @@
 
         .selector-header h2 {
             margin: 0;
-            color: var(--accent-blue);
+            color: var(--accent-cyan);
             font-size: 1.2rem;
         }
 
@@ -336,74 +336,33 @@
             justify-content: center;
         }
 
-        /* Отчёт и прибыль */
-        .report-section, .profit-section {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 30px;
-            border-top: 2px solid rgba(255,255,255,0.1);
-            display: none;
-        }
-
-        .report-section.active, .profit-section.active {
-            display: block;
-        }
-
-        .report-title {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--accent-blue);
-            text-align: center;
-        }
-
-        .report-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .report-total {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-top: 15px;
-            text-align: center;
-            color: var(--accent-yellow);
-        }
-
-        .profit-value {
-            font-size: 2.2rem;
-            font-weight: bold;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .profit-positive {
-            color: var(--accent-green);
-        }
-
-        .profit-negative {
-            color: var(--accent-red);
-        }
-
-        /* Блок текущей стоимости и кнопок */
+        /* Блок текущей стоимости — по центру */
         .total-section {
             background: var(--card-bg);
             padding: 20px;
             border-radius: 12px;
             margin-top: 25px;
-            border-top: 2px solid rgba(255,255,255,0.1);
+            border-top: 2px solid var(--border-glow);
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            gap: 10px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        .total-header {
+        .total-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .total-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .total-label {
@@ -437,8 +396,8 @@
 
         .copy-btn {
             background: rgba(33,150,243,0.2);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
         }
 
         .copy-btn:hover {
@@ -451,47 +410,6 @@
             border: 1px solid #ff5722;
             color: #ff5722;
         }
-        /* Блок текущей стоимости — по центру, над историей */
-.total-section {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 25px;
-    border-top: 2px solid rgba(255,255,255,0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.total-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.total-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.total-label {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-}
-
-.total-value-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.total-value {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--accent-yellow);
-}
 
         .clear-btn:hover {
             background: rgba(255, 87, 34, 0.3);
@@ -538,6 +456,87 @@
             left: 100%;
         }
 
+        /* Отчёт прибыли */
+        .profit-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border-top: 2px solid var(--border-glow);
+            display: none;
+        }
+
+        .profit-section.active {
+            display: block;
+        }
+
+        .overall-profit {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            color: var(--accent-cyan);
+            transition: all 0.2s;
+        }
+
+        .overall-profit:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .profit-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glow);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+
+        .profit-item:hover {
+            background: rgba(255,255,255,0.07);
+        }
+
+        .profit-item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profit-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .profit-amount {
+            font-weight: bold;
+        }
+
+        .profit-positive {
+            color: var(--accent-green);
+        }
+
+        .profit-negative {
+            color: var(--accent-red);
+        }
+
+        .no-data {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 20px;
+        }
+
         @media (max-width: 700px) {
             .container.compact {
                 grid-template-columns: 1fr;
@@ -550,11 +549,6 @@
                 align-items: center;
                 gap: 8px;
             }
-            .total-section {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 15px;
-            }
         }
     </style>
 </head>
@@ -563,7 +557,7 @@
         <h1>Игровой калькулятор</h1>
         <div class="tabs">
             <button class="tab-btn active" data-tab="buy">Покупка</button>
-            <button class="tab-btn" data-tab="sell">Продажа</button>
+            <button class="tab-btn" data-tab="sell">Продажка</button>
             <button class="tab-btn" data-tab="profit">Прибыль</button>
         </div>
     </div>
@@ -583,41 +577,28 @@
     <!-- Калькулятор продажи -->
     <div class="container" id="sell-container" style="display:none;"></div>
 
-    <!-- Отчёт покупок -->
-    <div class="report-section" id="buy-report">
-        <div class="report-title">История покупок</div>
-        <div class="report-list" id="buy-report-list"></div>
-        <div class="report-total">Всего потрачено: <span id="buy-total-report">0</span></div>
-    </div>
-
-    <!-- Отчёт продаж -->
-    <div class="report-section" id="sell-report">
-        <div class="report-title">История продаж</div>
-        <div class="report-list" id="sell-report-list"></div>
-        <div class="report-total">Всего получено: <span id="sell-total-report">0</span></div>
-    </div>
-
     <!-- Прибыль -->
     <div class="profit-section" id="profit-section">
-        <div class="report-title">Финансовый результат</div>
-        <div class="profit-value" id="profit-value">0</div>
-        <div class="report-total">Прибыль/убыток</div>
+        <!-- Общая прибыль -->
+        <div class="overall-profit" id="overall-profit">Общая прибыль: 0 ₽</div>
+        <!-- Детализация -->
+        <div id="profit-details"></div>
     </div>
 
-    <!-- Блок текущей стоимости и кнопок — по центру, над историей -->
-<div class="total-section">
-    <div class="total-wrapper">
-        <button class="deal-btn" id="deal-btn">Сделка состоялась</button>
-        <div class="total-info">
-            <span class="total-label">Текущая стоимость:</span>
-            <div class="total-value-container">
-                <div class="total-value" id="total-cost">0</div>
-                <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
-                <button class="clear-btn" id="clear-quantities" title="Очистить все количества">🧹</button>
+    <!-- Блок текущей стоимости и кнопок -->
+    <div class="total-section">
+        <div class="total-wrapper">
+            <button class="deal-btn" id="deal-btn">Сделка состоялась</button>
+            <div class="total-info">
+                <span class="total-label">Текущая стоимость:</span>
+                <div class="total-value-container">
+                    <div class="total-value" id="total-cost">0</div>
+                    <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
+                    <button class="clear-btn" id="clear-quantities" title="Очистить все количества">🧹</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <script>
         const ITEMS = [
@@ -646,7 +627,7 @@
         // Состояния
         let activeItems = new Set();
         let isCompactMode = false;
-        let currentTab = 'buy'; // buy | sell | profit
+        let currentTab = 'buy';
 
         // Отчёты
         let buyHistory = [];
@@ -664,13 +645,8 @@
         const toggleBtn = document.querySelector('.toggle-selector-btn');
         const tabButtons = document.querySelectorAll('.tab-btn');
         const profitSection = document.getElementById('profit-section');
-        const buyReport = document.getElementById('buy-report');
-        const sellReport = document.getElementById('sell-report');
-        const buyReportList = document.getElementById('buy-report-list');
-        const sellReportList = document.getElementById('sell-report-list');
-        const buyTotalReport = document.getElementById('buy-total-report');
-        const sellTotalReport = document.getElementById('sell-total-report');
-        const profitValue = document.getElementById('profit-value');
+        const overallProfit = document.getElementById('overall-profit');
+        const profitDetails = document.getElementById('profit-details');
 
         // Переключение вкладок
         tabButtons.forEach(btn => {
@@ -682,21 +658,17 @@
                 // Скрыть всё
                 buyContainer.style.display = 'none';
                 sellContainer.style.display = 'none';
-                buyReport.classList.remove('active');
-                sellReport.classList.remove('active');
                 profitSection.classList.remove('active');
 
                 if (currentTab === 'buy') {
                     buyContainer.style.display = 'grid';
-                    buyReport.classList.add('active');
                     updateTotal('buy');
                 } else if (currentTab === 'sell') {
                     sellContainer.style.display = 'grid';
-                    sellReport.classList.add('active');
                     updateTotal('sell');
                 } else if (currentTab === 'profit') {
                     profitSection.classList.add('active');
-                    renderProfit();
+                    renderProfitReport();
                 }
             });
         });
@@ -804,39 +776,95 @@
             totalCostElement.textContent = total;
         }
 
-        function renderProfit() {
-            const totalBuy = buyHistory.reduce((sum, item) => sum + item.total, 0);
-            const totalSell = sellHistory.reduce((sum, item) => sum + item.total, 0);
-            const profit = totalSell - totalBuy;
+        function renderProfitReport() {
+            // Подсчёт по каждому предмету
+            const itemStats = {};
 
-            profitValue.textContent = profit.toLocaleString('ru-RU') + ' ₽';
-            profitValue.className = 'profit-value ' + (profit >= 0 ? 'profit-positive' : 'profit-negative');
-        }
+            // Инициализация
+            ITEMS.forEach(item => {
+                itemStats[item.id] = {
+                    id: item.id,
+                    name: item.name,
+                    icon: item.icon,
+                    boughtQty: 0,
+                    boughtTotal: 0,
+                    soldQty: 0,
+                    soldTotal: 0
+                };
+            });
 
-        function renderReport(listElement, history) {
-            listElement.innerHTML = '';
-            if (history.length === 0) {
-                listElement.innerHTML = '<div style="text-align:center;color:#666;">Нет записей</div>';
+            // Покупки
+            buyHistory.forEach(record => {
+                if (itemStats[record.id]) {
+                    itemStats[record.id].boughtQty += record.quantity;
+                    itemStats[record.id].boughtTotal += record.total;
+                }
+            });
+
+            // Продажи
+            sellHistory.forEach(record => {
+                if (itemStats[record.id]) {
+                    itemStats[record.id].soldQty += record.quantity;
+                    itemStats[record.id].soldTotal += record.total;
+                }
+            });
+
+            // Общая прибыль
+            const totalBought = Object.values(itemStats).reduce((sum, item) => sum + item.boughtTotal, 0);
+            const totalSold = Object.values(itemStats).reduce((sum, item) => sum + item.soldTotal, 0);
+            const totalProfit = totalSold - totalBought;
+
+            // Обновление общей прибыли
+            overallProfit.textContent = `Общая прибыль: ${totalProfit >= 0 ? '+' : ''}${totalProfit.toLocaleString('ru-RU')} ₽`;
+            if (totalProfit >= 0) {
+                overallProfit.className = 'overall-profit profit-positive';
+            } else {
+                overallProfit.className = 'overall-profit profit-negative';
+            }
+
+            // Фильтрация: только предметы с данными
+            const relevantItems = Object.values(itemStats).filter(item =>
+                item.boughtQty > 0 || item.soldQty > 0
+            );
+
+            // Сортировка: сначала прибыльные, потом убыточные
+            relevantItems.sort((a, b) => {
+                const profitA = a.soldTotal - a.boughtTotal;
+                const profitB = b.soldTotal - b.boughtTotal;
+                return profitB - profitA; // убывание
+            });
+
+            // Рендер детализации
+            if (relevantItems.length === 0) {
+                profitDetails.innerHTML = '<div class="no-data">Нет данных. Совершите сделку в разделе "Покупка" или "Продажа"</div>';
                 return;
             }
-            history.forEach(record => {
-                const div = document.createElement('div');
-                div.className = 'report-item';
-                div.innerHTML = `
-                    <span>${record.name} (${record.quantity})</span>
-                    <span>${record.total} ₽</span>
-                `;
-                listElement.appendChild(div);
-            });
-        }
 
-        function updateReportTotals() {
-            const totalBuy = buyHistory.reduce((sum, item) => sum + item.total, 0);
-            const totalSell = sellHistory.reduce((sum, item) => sum + item.total, 0);
-            buyTotalReport.textContent = totalBuy + ' ₽';
-            sellTotalReport.textContent = totalSell + ' ₽';
-            renderReport(buyReportList, buyHistory);
-            renderReport(sellReportList, sellHistory);
+            profitDetails.innerHTML = '';
+            relevantItems.forEach(item => {
+                const profit = item.soldTotal - item.boughtTotal;
+                const profitClass = profit >= 0 ? 'profit-positive' : 'profit-negative';
+
+                const div = document.createElement('div');
+                div.className = 'profit-item';
+                div.innerHTML = `
+                    <div class="profit-item-name" title="${item.name}">
+                        <div class="item-icon" style="background-image: url('${item.icon}')"></div>
+                        ${item.name}
+                    </div>
+                    <div class="profit-line">
+                        <span>Куплено: ${item.boughtQty} шт. | Продано: ${item.soldQty} шт.</span>
+                    </div>
+                    <div class="profit-line">
+                        <span>Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽</span>
+                        <span>Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽</span>
+                    </div>
+                    <div class="profit-line">
+                        <span class="profit-amount ${profitClass}">Прибыль: ${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} ₽</span>
+                    </div>
+                `;
+                profitDetails.appendChild(div);
+            });
         }
 
         // Кнопка "Сделка состоялась"
@@ -856,6 +884,7 @@
                         const item = ITEMS.find(it => it.id === id);
                         const total = q * p;
                         const record = {
+                            id: id,
                             name: item.name,
                             quantity: q,
                             price: p,
@@ -873,9 +902,8 @@
 
                 if (hasData) {
                     alert(`✅ Сделка по ${currentTab === 'buy' ? 'покупке' : 'продаже'} зафиксирована!`);
-                    updateReportTotals();
                     if (currentTab === 'profit') {
-                        renderProfit();
+                        renderProfitReport();
                     }
                 } else {
                     alert('⚠️ Введите количество и цену хотя бы для одного предмета.');
