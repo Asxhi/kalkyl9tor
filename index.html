@@ -14,6 +14,7 @@
             --accent-yellow: #ffeb3b;
             --accent-blue: #2196f3;
             --accent-green: #4caf50;
+            --accent-red: #ff5722;
         }
 
         * {
@@ -44,7 +45,15 @@
             color: transparent;
         }
 
-        .mode-toggle {
+        /* Кнопки переключения вкладок */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -59,17 +68,22 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
-            margin-top: 10px;
         }
 
-        .mode-toggle:hover {
+        .tab-btn:hover {
             background: rgba(0, 255, 255, 0.1);
             box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
             color: #ffffff;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
-        .mode-toggle::before {
+        .tab-btn.active {
+            background: rgba(0, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .tab-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -80,11 +94,11 @@
             transition: left 0.5s ease;
         }
 
-        .mode-toggle:hover::before {
+        .tab-btn:hover::before {
             left: 100%;
         }
 
-        /* Стили для сворачиваемого селектора */
+        /* Сворачиваемый селектор */
         .selector {
             background: var(--card-bg);
             padding: 16px;
@@ -137,7 +151,6 @@
             max-height: 500px;
         }
 
-        /* Кнопки выбора предметов */
         .item-toggle {
             display: inline-flex;
             align-items: center;
@@ -169,7 +182,6 @@
             box-shadow: 0 0 15px rgba(255,235,59,0.7);
         }
 
-        /* Основной контейнер */
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -260,7 +272,7 @@
             border: 1px solid rgba(255,255,255,0.08);
         }
 
-        /* Компактный режим — 3 столбца */
+        /* Компактный режим */
         .container.compact {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -322,7 +334,58 @@
             justify-content: center;
         }
 
-        /* Общая стоимость */
+        /* Отчёт и прибыль */
+        .report-section, .profit-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            display: none;
+        }
+
+        .report-section.active, .profit-section.active {
+            display: block;
+        }
+
+        .report-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+            text-align: center;
+        }
+
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .report-total {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 15px;
+            text-align: center;
+            color: var(--accent-yellow);
+        }
+
+        .profit-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .profit-positive {
+            color: var(--accent-green);
+        }
+
+        .profit-negative {
+            color: var(--accent-red);
+        }
+
+        /* Общая стоимость и кнопки */
         .total-section {
             background: var(--card-bg);
             padding: 20px;
@@ -330,10 +393,14 @@
             text-align: center;
             margin-top: 25px;
             border-top: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .total-header {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
         .total-label {
@@ -353,10 +420,7 @@
             color: var(--accent-yellow);
         }
 
-        .copy-btn {
-            background: rgba(33,150,243,0.2);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
+        .copy-btn, .deal-btn {
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -365,6 +429,14 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
+            border: none;
+            font-weight: bold;
+        }
+
+        .copy-btn {
+            background: rgba(33,150,243,0.2);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
         }
 
         .copy-btn:hover {
@@ -372,8 +444,19 @@
             transform: scale(1.1);
         }
 
-        .copy-btn:active {
-            transform: scale(0.95);
+        .deal-btn {
+            background: rgba(76,175,80,0.2);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            width: auto;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .deal-btn:hover {
+            background: rgba(76,175,80,0.3);
+            transform: scale(1.05);
         }
 
         .clear-btn {
@@ -396,10 +479,6 @@
             transform: scale(1.1);
         }
 
-        .clear-btn:active {
-            transform: scale(0.95);
-        }
-
         @media (max-width: 700px) {
             .container.compact {
                 grid-template-columns: 1fr;
@@ -407,15 +486,25 @@
             .container {
                 grid-template-columns: 1fr;
             }
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Игровой калькулятор</h1>
-        <button class="mode-toggle" id="toggle-mode">Компактный режим</button>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="buy">Покупка</button>
+            <button class="tab-btn" data-tab="sell">Продажа</button>
+            <button class="tab-btn" data-tab="profit">Прибыль</button>
+        </div>
     </div>
 
+    <!-- Выбор предметов -->
     <div class="selector">
         <div class="selector-header" id="selector-header">
             <h2>Выбор предметов</h2>
@@ -424,10 +513,39 @@
         <div class="items-list" id="items-list"></div>
     </div>
 
-    <div class="container" id="items-container"></div>
+    <!-- Калькулятор покупки -->
+    <div class="container" id="buy-container"></div>
 
+    <!-- Калькулятор продажи -->
+    <div class="container" id="sell-container" style="display:none;"></div>
+
+    <!-- Отчёт покупок -->
+    <div class="report-section" id="buy-report">
+        <div class="report-title">История покупок</div>
+        <div class="report-list" id="buy-report-list"></div>
+        <div class="report-total">Всего потрачено: <span id="buy-total-report">0</span></div>
+    </div>
+
+    <!-- Отчёт продаж -->
+    <div class="report-section" id="sell-report">
+        <div class="report-title">История продаж</div>
+        <div class="report-list" id="sell-report-list"></div>
+        <div class="report-total">Всего получено: <span id="sell-total-report">0</span></div>
+    </div>
+
+    <!-- Прибыль -->
+    <div class="profit-section" id="profit-section">
+        <div class="report-title">Финансовый результат</div>
+        <div class="profit-value" id="profit-value">0</div>
+        <div class="report-total">Прибыль/убыток</div>
+    </div>
+
+    <!-- Общая стоимость и кнопки -->
     <div class="total-section">
-        <div class="total-label">Общая стоимость:</div>
+        <div class="total-header">
+            <button class="deal-btn" id="deal-btn">Сделка состоялась</button>
+            <div class="total-label">Текущая стоимость:</div>
+        </div>
         <div class="total-value-container">
             <div class="total-value" id="total-cost">0</div>
             <button class="copy-btn" id="copy-total" title="Копировать сумму">📋</button>
@@ -437,40 +555,87 @@
 
     <script>
         const ITEMS = [
-            { id: 'dust', name: 'Аномальная пыль', price: 270, icon: 'anomalnaya-pyl.png' },
-            { id: 'tool', name: 'Мультитул', price: 5000, icon: 'multitul.png' },
-            { id: 'yeast', name: 'Дрожжи', price: 1500, icon: 'drozhzhi.png' },
-            { id: 'hoof', name: 'Копыто сильного кабана', price: 3500, icon: 'kopyto-kabana.png' },
-            { id: 'bolts', name: 'Набор болтов', price: 8000, icon: 'nabor-boltov.png' },
-            { id: 'wormwood', name: 'Янтарная полынь', price: 12000, icon: 'yantarnaya-polyin.png' },
-            { id: 'chertocvet', name: 'Чертоцвет', price: 1000, icon: 'chertotsvet.png' },
-            { id: 'ammonia', name: 'Аммиак', price: 8000, icon: 'ammiak.png' },
+            { id: 'dust', name: 'Аномальная пыль', price: 500, icon: 'anomalnaya-pyl.png' },
+            { id: 'tool', name: 'Мультитул', price: 3000, icon: 'multitul.png' },
+            { id: 'yeast', name: 'Дрожжи', price: 800, icon: 'drozhzhi.png' },
+            { id: 'hoof', name: 'Копыто сильного кабана', price: 1200, icon: 'kopyto-kabana.png' },
+            { id: 'bolts', name: 'Набор болтов', price: 700, icon: 'nabor-boltov.png' },
+            { id: 'wormwood', name: 'Янтарная полынь', price: 1500, icon: 'yantarnaya-polyin.png' },
+            { id: 'chertocvet', name: 'Чертоцвет', price: 2000, icon: 'chertotsvet.png' },
+            { id: 'ammonia', name: 'Аммиак', price: 900, icon: 'ammiak.png' },
             { id: 'lemon', name: 'Мякоть лимонника', price: 1000, icon: 'myakot-limonnika.png' },
-            { id: 'slant', name: 'Мякоть сластены', price: 7000, icon: 'myakot-slasteny.png' },
-            { id: 'salt', name: 'Мякоть солевика', price: 1000, icon: 'myakot-solevika.png' },
-            { id: 'cube', name: 'Мякоть куборбуза', price: 3500, icon: 'myakot-kuborbuz.png' },
-            { id: 'spices', name: 'Набор специй', price: 2500, icon: 'nabor-spetsiy.png' },
-            { id: 'plasma', name: 'Аномальная плазма', price: 1500, icon: 'anomalnaya-plazma.png' },
-            { id: 'gnosis', name: 'Гнозис', price: 100, icon: 'gnosis.png' },
-            { id: 'fish', name: 'Полутухлая рыба', price: 2000, icon: 'polutukhlaya-ryba.png' },
-            { id: 'millet', name: 'Банка с пшеном', price: 3000, icon: 'banka-s-pshenom.png' },
-            { id: 'solution', name: 'Колба с раствором', price: 2500, icon: 'kolba-s-rastvorom.png' },
-            { id: 'acid', name: 'Азотная кислота', price: 5000, icon: 'azotnaya-kislota.png' },
-            { id: 'meat', name: 'Мясо', price: 2000, icon: 'myaso.png' }
+            { id: 'slant', name: 'Мякоть сластены', price: 8000, icon: 'myakot-slasteny.png' },
+            { id: 'salt', name: 'Мякоть солевика', price: 500, icon: 'myakot-solevika.png' },
+            { id: 'cube', name: 'Мякоть куборбуза', price: 2500, icon: 'myakot-kuborbuz.png' },
+            { id: 'spices', name: 'Набор специй', price: 1100, icon: 'nabor-spetsiy.png' },
+            { id: 'plasma', name: 'Аномальная плазма', price: 4000, icon: 'anomalnaya-plazma.png' },
+            { id: 'gnosis', name: 'Гнозис', price: 10000, icon: 'gnosis.png' },
+            { id: 'fish', name: 'Полутухлая рыба', price: 300, icon: 'polutukhlaya-ryba.png' },
+            { id: 'millet', name: 'Банка с пшеном', price: 400, icon: 'banka-s-pshenom.png' },
+            { id: 'solution', name: 'Колба с раствором', price: 1300, icon: 'kolba-s-rastvorom.png' },
+            { id: 'acid', name: 'Азотная кислота', price: 1800, icon: 'azotnaya-kislota.png' },
+            { id: 'meat', name: 'Мясо', price: 250, icon: 'myaso.png' }
         ];
 
+        // Состояния
+        let activeItems = new Set();
+        let isCompactMode = false;
+        let currentTab = 'buy'; // buy | sell | profit
+
+        // Отчёты
+        let buyHistory = [];
+        let sellHistory = [];
+
+        // DOM элементы
         const selectorList = document.getElementById('items-list');
-        const container = document.getElementById('items-container');
+        const buyContainer = document.getElementById('buy-container');
+        const sellContainer = document.getElementById('sell-container');
         const totalCostElement = document.getElementById('total-cost');
         const copyBtn = document.getElementById('copy-total');
         const clearBtn = document.getElementById('clear-quantities');
-        const modeToggle = document.getElementById('toggle-mode');
+        const dealBtn = document.getElementById('deal-btn');
         const selectorHeader = document.getElementById('selector-header');
         const toggleBtn = document.querySelector('.toggle-selector-btn');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const profitSection = document.getElementById('profit-section');
+        const buyReport = document.getElementById('buy-report');
+        const sellReport = document.getElementById('sell-report');
+        const buyReportList = document.getElementById('buy-report-list');
+        const sellReportList = document.getElementById('sell-report-list');
+        const buyTotalReport = document.getElementById('buy-total-report');
+        const sellTotalReport = document.getElementById('sell-total-report');
+        const profitValue = document.getElementById('profit-value');
 
-        let activeItems = new Set(); // ✅ Ничего не выбрано по умолчанию
-        let isCompactMode = false;
+        // Переключение вкладок
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTab = btn.dataset.tab;
 
+                // Скрыть всё
+                buyContainer.style.display = 'none';
+                sellContainer.style.display = 'none';
+                buyReport.classList.remove('active');
+                sellReport.classList.remove('active');
+                profitSection.classList.remove('active');
+
+                if (currentTab === 'buy') {
+                    buyContainer.style.display = 'grid';
+                    buyReport.classList.add('active');
+                    updateTotal('buy');
+                } else if (currentTab === 'sell') {
+                    sellContainer.style.display = 'grid';
+                    sellReport.classList.add('active');
+                    updateTotal('sell');
+                } else if (currentTab === 'profit') {
+                    profitSection.classList.add('active');
+                    renderProfit();
+                }
+            });
+        });
+
+        // Рендер выбора предметов
         function renderSelector() {
             selectorList.innerHTML = '';
             ITEMS.forEach(item => {
@@ -498,73 +663,74 @@
             });
         }
 
+        // Рендер активных предметов
         function renderActiveItems() {
-            container.innerHTML = '';
+            buyContainer.innerHTML = '';
+            sellContainer.innerHTML = '';
             ITEMS.forEach(item => {
                 if (!activeItems.has(item.id)) return;
 
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.dataset.id = item.id;
+                // Покупка
+                const buyCard = createItemCard(item, 'buy');
+                buyContainer.appendChild(buyCard);
 
-                if (isCompactMode) {
-                    card.innerHTML = `
-                        <div class="item-icon" style="background-image: url('${item.icon}')"></div>
-                        <div class="item-name">${item.name}</div>
-                        <div class="input-group">
-                            <label class="input-label">Кол-во:</label>
-                            <input type="number" class="input-field quantity" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Цена:</label>
-                            <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                        </div>
-                        <div class="result">0</div>
-                    `;
-                } else {
-                    card.innerHTML = `
-                        <div class="item-header">
-                            <div class="item-icon" style="background-image: url('${item.icon}')"></div>
-                            <div class="item-name">${item.name}</div>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Количество:</label>
-                            <input type="number" class="input-field quantity" min="0" step="1">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Цена за штуку:</label>
-                            <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
-                        </div>
-                        <div class="result">0</div>
-                        <div class="contacts">Контакты или заметки...</div>
-                    `;
-                }
-
-                const qInput = card.querySelector('.quantity');
-                const pInput = card.querySelector('.price');
-                const result = card.querySelector('.result');
-
-                qInput.addEventListener('focus', () => qInput.select());
-
-                const update = () => {
-                    const q = parseInt(qInput.value) || 0;
-                    const p = parseInt(pInput.value) || 0;
-                    const subtotal = q * p;
-                    result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
-                    updateTotal();
-                };
-
-                qInput.addEventListener('input', update);
-                pInput.addEventListener('input', update);
-
-                container.appendChild(card);
+                // Продажа
+                const sellCard = createItemCard(item, 'sell');
+                sellContainer.appendChild(sellCard);
             });
-            updateTotal();
+            updateTotal(currentTab === 'profit' ? 'buy' : currentTab);
         }
 
-        function updateTotal() {
+        function createItemCard(item, mode) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.dataset.id = item.id;
+
+            card.innerHTML = `
+                <div class="item-header">
+                    <div class="item-icon" style="background-image: url('${item.icon}')"></div>
+                    <div class="item-name">${item.name}</div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">${mode === 'buy' ? 'Куплено' : 'Продано'}:</label>
+                    <input type="number" class="input-field quantity" min="0" step="1">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Цена:</label>
+                    <input type="number" class="input-field price" value="${item.price}" min="0" step="100">
+                </div>
+                <div class="result">0</div>
+                <div class="contacts">Контакты или заметки...</div>
+            `;
+
+            const qInput = card.querySelector('.quantity');
+            const pInput = card.querySelector('.price');
+            const result = card.querySelector('.result');
+
+            qInput.addEventListener('focus', () => qInput.select());
+
+            const update = () => {
+                const q = parseInt(qInput.value) || 0;
+                const p = parseInt(pInput.value) || 0;
+                const subtotal = q * p;
+                result.textContent = subtotal.toLocaleString('ru-RU').replace(/ /g, ' ');
+                if (mode === 'buy' && currentTab === 'buy') {
+                    updateTotal('buy');
+                } else if (mode === 'sell' && currentTab === 'sell') {
+                    updateTotal('sell');
+                }
+            };
+
+            qInput.addEventListener('input', update);
+            pInput.addEventListener('input', update);
+
+            return card;
+        }
+
+        function updateTotal(mode) {
             let total = 0;
-            document.querySelectorAll('.result').forEach(el => {
+            const container = mode === 'buy' ? buyContainer : sellContainer;
+            container.querySelectorAll('.result').forEach(el => {
                 const valStr = el.textContent.replace(/\s/g, '');
                 const val = parseInt(valStr) || 0;
                 total += val;
@@ -572,13 +738,95 @@
             totalCostElement.textContent = total;
         }
 
+        function renderProfit() {
+            const totalBuy = buyHistory.reduce((sum, item) => sum + item.total, 0);
+            const totalSell = sellHistory.reduce((sum, item) => sum + item.total, 0);
+            const profit = totalSell - totalBuy;
+
+            profitValue.textContent = profit.toLocaleString('ru-RU') + ' ₽';
+            profitValue.className = 'profit-value ' + (profit >= 0 ? 'profit-positive' : 'profit-negative');
+        }
+
+        function renderReport(listElement, history) {
+            listElement.innerHTML = '';
+            if (history.length === 0) {
+                listElement.innerHTML = '<div style="text-align:center;color:#666;">Нет записей</div>';
+                return;
+            }
+            history.forEach(record => {
+                const div = document.createElement('div');
+                div.className = 'report-item';
+                div.innerHTML = `
+                    <span>${record.name} (${record.quantity})</span>
+                    <span>${record.total} ₽</span>
+                `;
+                listElement.appendChild(div);
+            });
+        }
+
+        function updateReportTotals() {
+            const totalBuy = buyHistory.reduce((sum, item) => sum + item.total, 0);
+            const totalSell = sellHistory.reduce((sum, item) => sum + item.total, 0);
+            buyTotalReport.textContent = totalBuy + ' ₽';
+            sellTotalReport.textContent = totalSell + ' ₽';
+            renderReport(buyReportList, buyHistory);
+            renderReport(sellReportList, sellHistory);
+        }
+
+        // Кнопка "Сделка состоялась"
+        dealBtn.addEventListener('click', () => {
+            if (currentTab === 'buy' || currentTab === 'sell') {
+                const container = currentTab === 'buy' ? buyContainer : sellContainer;
+                let hasData = false;
+
+                container.querySelectorAll('.item-card').forEach(card => {
+                    const qInput = card.querySelector('.quantity');
+                    const pInput = card.querySelector('.price');
+                    const q = parseInt(qInput.value) || 0;
+                    const p = parseInt(pInput.value) || 0;
+                    if (q > 0 && p > 0) {
+                        hasData = true;
+                        const id = card.dataset.id;
+                        const item = ITEMS.find(it => it.id === id);
+                        const total = q * p;
+                        const record = {
+                            name: item.name,
+                            quantity: q,
+                            price: p,
+                            total: total,
+                            timestamp: new Date()
+                        };
+
+                        if (currentTab === 'buy') {
+                            buyHistory.push(record);
+                        } else {
+                            sellHistory.push(record);
+                        }
+                    }
+                });
+
+                if (hasData) {
+                    alert(`✅ Сделка по ${currentTab === 'buy' ? 'покупке' : 'продаже'} зафиксирована!`);
+                    updateReportTotals();
+                    if (currentTab === 'profit') {
+                        renderProfit();
+                    }
+                } else {
+                    alert('⚠️ Введите количество и цену хотя бы для одного предмета.');
+                }
+            }
+        });
+
+        // Очистка полей
         clearBtn.addEventListener('click', () => {
-            document.querySelectorAll('.quantity').forEach(input => {
+            const container = currentTab === 'buy' ? buyContainer : sellContainer;
+            container.querySelectorAll('.quantity').forEach(input => {
                 input.value = '';
                 input.dispatchEvent(new Event('input'));
             });
         });
 
+        // Копирование
         copyBtn.addEventListener('click', async () => {
             const text = totalCostElement.textContent;
             try {
@@ -587,27 +835,17 @@
                 copyBtn.innerHTML = '✓';
                 setTimeout(() => copyBtn.innerHTML = original, 1000);
             } catch (e) {
-                alert('Не удалось скопировать. Попробуйте вручную.');
+                alert('Не удалось скопировать.');
             }
         });
 
-        modeToggle.addEventListener('click', () => {
-            isCompactMode = !isCompactMode;
-            if (isCompactMode) {
-                container.classList.add('compact');
-                modeToggle.textContent = 'Стандартный режим';
-            } else {
-                container.classList.remove('compact');
-                modeToggle.textContent = 'Компактный режим';
-            }
-            renderActiveItems();
-        });
-
+        // Сворачивание селектора
         selectorHeader.addEventListener('click', () => {
             selectorList.classList.toggle('expanded');
             toggleBtn.classList.toggle('rotated');
         });
 
+        // Инициализация
         renderSelector();
         renderActiveItems();
     </script>
