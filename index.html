@@ -456,86 +456,86 @@
             left: 100%;
         }
 
-        /* Отчёт прибыли */
-        .profit-section {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 30px;
-            border-top: 2px solid var(--border-glow);
-            display: none;
-        }
+       /* Отчёт прибыли */
+.profit-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 30px;
+    border-top: 2px solid var(--border-glow);
+    display: none;
+}
 
-        .profit-section.active {
-            display: block;
-        }
+.profit-section.active {
+    display: block;
+}
 
-        .overall-profit {
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: bold;
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 10px;
-            background: rgba(0, 255, 255, 0.05);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-            color: var(--accent-cyan);
-            transition: all 0.2s;
-        }
+.overall-profit {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255,235,59,0.05);
+    border: 1px solid rgba(255,235,59,0.2);
+    box-shadow: 0 0 10px rgba(255,235,59,0.3);
+    color: var(--accent-yellow);
+    transition: all 0.2s;
+}
 
-        .overall-profit:hover {
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-        }
+.overall-profit:hover {
+    background: rgba(255,235,59,0.1);
+    box-shadow: 0 0 15px rgba(255,235,59,0.5);
+}
 
-        .profit-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-glow);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 15px;
-            transition: background 0.2s;
-        }
+.profit-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-glow);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 15px;
+    transition: background 0.2s;
+}
 
-        .profit-item:hover {
-            background: rgba(255,255,255,0.07);
-        }
+.profit-item:hover {
+    background: rgba(255,255,255,0.07);
+}
 
-        .profit-item-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.profit-item-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .profit-line {
-            display: flex;
-            justify-content: space-between;
-            margin: 6px 0;
-            font-size: 0.95rem;
-        }
+.profit-line {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    font-size: 0.95rem;
+}
 
-        .profit-amount {
-            font-weight: bold;
-        }
+.profit-amount {
+    font-weight: bold;
+}
 
-        .profit-positive {
-            color: var(--accent-green);
-        }
+.profit-positive {
+    color: var(--accent-yellow);
+}
 
-        .profit-negative {
-            color: var(--accent-red);
-        }
+.profit-negative {
+    color: var(--accent-red);
+}
 
-        .no-data {
-            text-align: center;
-            color: var(--text-secondary);
-            font-style: italic;
-            padding: 20px;
-        }
+.no-data {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 20px;
+}
 
         @media (max-width: 700px) {
             .container.compact {
@@ -557,7 +557,7 @@
         <h1>Игровой калькулятор</h1>
         <div class="tabs">
             <button class="tab-btn active" data-tab="buy">Покупка</button>
-            <button class="tab-btn" data-tab="sell">Продажка</button>
+            <button class="tab-btn" data-tab="sell">Продажа</button>
             <button class="tab-btn" data-tab="profit">Прибыль</button>
         </div>
     </div>
@@ -856,9 +856,8 @@
                         <span>Куплено: ${item.boughtQty} шт. | Продано: ${item.soldQty} шт.</span>
                     </div>
                     <div class="profit-line">
-                        <span>Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽</span>
-                        <span>Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽</span>
-                    </div>
+    <span>Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽ | Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽</span>
+</div>
                     <div class="profit-line">
                         <span class="profit-amount ${profitClass}">Прибыль: ${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} ₽</span>
                     </div>
