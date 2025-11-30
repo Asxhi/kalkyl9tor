@@ -451,6 +451,47 @@
             border: 1px solid #ff5722;
             color: #ff5722;
         }
+        /* Блок текущей стоимости — по центру, над историей */
+.total-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 25px;
+    border-top: 2px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.total-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.total-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.total-label {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+}
+
+.total-value-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.total-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-yellow);
+}
 
         .clear-btn:hover {
             background: rgba(255, 87, 34, 0.3);
