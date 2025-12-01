@@ -454,23 +454,6 @@
             }
         }
 
-        /* Кнопка удаления сделки */
-        .delete-record-btn {
-            background: none;
-            border: none;
-            color: #ff5722;
-            cursor: pointer;
-            margin-left: 8px;
-            font-size: 1rem;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .delete-record-btn:hover {
-            opacity: 1;
-            color: white;
-        }
-
         /* Тост-уведомление */
         .toast {
             position: fixed;
@@ -489,7 +472,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        /* Отчёт прибыли */
+        /* Отчёт прибыли — компактный режим */
         .profit-section {
             background: var(--card-bg);
             padding: 20px;
@@ -522,13 +505,23 @@
             box-shadow: 0 0 15px rgba(255,235,59,0.5);
         }
 
+        /* Сетка для предметов — 3 столбца */
+        .profit-items-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        /* Карточка предмета в отчёте — компактная */
         .profit-item {
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-glow);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            padding: 12px;
             transition: background 0.2s;
+            position: relative;
+            min-height: 100px;
         }
 
         .profit-item:hover {
@@ -536,22 +529,46 @@
         }
 
         .profit-item-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-icon-small {
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background-color: #1a1a22;
+        }
+
+        .profit-stats {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
 
         .profit-line {
-            display: flex;
-            margin: 6px 0;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            margin: 4px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .profit-amount {
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .profit-positive {
@@ -560,6 +577,28 @@
 
         .profit-negative {
             color: var(--accent-red);
+        }
+
+        /* Кнопка удаления — маленькая */
+        .delete-record-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #ff5722;
+            cursor: pointer;
+            font-size: 0.85rem;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .delete-record-btn:hover {
+            opacity: 1;
+            color: white;
+            background: rgba(255, 87, 34, 0.2);
         }
 
         .no-data {
@@ -580,6 +619,9 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 8px;
+            }
+            .profit-items-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -900,62 +942,65 @@
                 return;
             }
 
+            // Очищаем контейнер и создаем сетку
             profitDetails.innerHTML = '';
+            const grid = document.createElement('div');
+            grid.className = 'profit-items-grid';
+
             relevantItems.forEach(item => {
                 const profit = item.soldTotal - item.boughtTotal;
                 const profitClass = profit >= 0 ? 'profit-positive' : 'profit-negative';
 
+                // Генерируем список сделок
                 const allRecords = [...item.buyRecords, ...item.sellRecords].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
                 let recordsHtml = '';
                 allRecords.forEach(rec => {
                     const typeLabel = rec.type === 'buy' ? 'Покупка' : 'Продажа';
                     recordsHtml += `
-                        <div class="profit-record" style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-                            <span>${typeLabel}: ${rec.quantity} × ${rec.price} ₽ = ${rec.total} ₽</span>
-                            <button class="delete-record-btn" data-type="${rec.type}" data-index="${rec.globalIndex}" title="Удалить сделку">🗑️</button>
-                        </div>
+                        <div class="profit-line">${typeLabel}: ${rec.quantity} × ${rec.price} ₽ = ${rec.total} ₽</div>
                     `;
                 });
 
-                const div = document.createElement('div');
-                div.className = 'profit-item';
-                div.innerHTML = `
-                    <div class="profit-item-name" title="${item.name}">
-                        <div class="item-icon" style="background-image: url('${item.icon}')"></div>
-                        ${item.name}
+                // Создаем карточку
+                const card = document.createElement('div');
+                card.className = 'profit-item';
+
+                card.innerHTML = `
+                    <div class="profit-item-name">
+                        <div class="item-icon-small" style="background-image: url('${item.icon}')"></div>
+                        <span>${item.name}</span>
                     </div>
-                    <div class="profit-line">
-                        <span>Куплено: ${item.boughtQty} шт. | Продано: ${item.soldQty} шт.</span>
+                    <div class="profit-stats">
+                        Куплено: ${item.boughtQty} шт. | Продано: ${item.soldQty} шт.<br>
+                        Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽ | Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽
                     </div>
-                    <div class="profit-line">
-                        <span>Потрачено: ${item.boughtTotal.toLocaleString('ru-RU')} ₽ | Получено: ${item.soldTotal.toLocaleString('ru-RU')} ₽</span>
+                    <div class="profit-line profit-amount ${profitClass}">
+                        Прибыль: ${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} ₽
                     </div>
-                    <div class="profit-line">
-                        <span class="profit-amount ${profitClass}">Прибыль: ${profit >= 0 ? '+' : ''}${profit.toLocaleString('ru-RU')} ₽</span>
-                    </div>
-                    <div class="profit-records-list" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div class="profit-records-list" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
                         ${recordsHtml}
                     </div>
+                    <button class="delete-record-btn" data-item-id="${item.id}" title="Удалить все сделки по этому предмету">🗑️</button>
                 `;
-                profitDetails.appendChild(div);
+
+                grid.appendChild(card);
             });
 
-            // Обработчики удаления
+            profitDetails.appendChild(grid);
+
+            // Обработчик удаления ВСЕХ сделок по предмету
             document.querySelectorAll('.delete-record-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const type = this.dataset.type;
-                    const index = parseInt(this.dataset.index);
+                    const itemId = this.dataset.itemId;
 
-                    if (type === 'buy' && index >= 0 && index < buyHistory.length) {
-                        buyHistory.splice(index, 1);
-                    } else if (type === 'sell' && index >= 0 && index < sellHistory.length) {
-                        sellHistory.splice(index, 1);
-                    }
+                    // Фильтруем истории
+                    buyHistory = buyHistory.filter(record => record.id !== itemId);
+                    sellHistory = sellHistory.filter(record => record.id !== itemId);
 
                     saveToStorage();
                     renderProfitReport();
-                    showToast('Сделка удалена.', true);
+                    showToast(`Все сделки по "${ITEMS.find(i => i.id === itemId)?.name}" удалены.`, true);
                 });
             });
         }
