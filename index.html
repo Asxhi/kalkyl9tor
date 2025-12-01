@@ -149,7 +149,7 @@
         .items-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 24px; /* ← Вот здесь отступы между кнопками */
+            gap: 24px;
             justify-content: center;
             max-height: 0;
             overflow: hidden;
@@ -908,6 +908,11 @@
         toggleSelectorBtn.addEventListener('click', () => {
             const isExpanded = selectorContainer.style.display === 'block';
             selectorContainer.style.display = isExpanded ? 'none' : 'block';
+
+            // Если открываем — рендерим кнопки
+            if (!isExpanded) {
+                renderSelector();
+            }
 
             toggleSelectorBtn.innerHTML = isExpanded
                 ? 'Выбор предметов'
