@@ -905,19 +905,14 @@
         });
 
         // Кнопка "Выбор предметов"
-toggleSelectorBtn.addEventListener('click', () => {
-    const isExpanded = selectorContainer.style.display === 'block';
-    selectorContainer.style.display = isExpanded ? 'none' : 'block';
+        toggleSelectorBtn.addEventListener('click', () => {
+            const isExpanded = selectorContainer.style.display === 'block';
+            selectorContainer.style.display = isExpanded ? 'none' : 'block';
 
-    // Если открываем — рендерим кнопки
-    if (!isExpanded) {
-        renderSelector();
-    }
-
-    toggleSelectorBtn.innerHTML = isExpanded
-        ? 'Выбор предметов'
-        : 'Выбор предметов ▲';
-});
+            toggleSelectorBtn.innerHTML = isExpanded
+                ? 'Выбор предметов'
+                : 'Выбор предметов ▲';
+        });
 
         // Инициализация
         renderSelector();
